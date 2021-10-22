@@ -1,0 +1,17 @@
+{
+  "name": "essentials",
+  "version": "1.0.0",
+  "description": "Essentials is a online grocery ordering application",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon backend/app",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Prem",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.5.1",
+    "nodemon": "^2.0.15"
+  }
+}
