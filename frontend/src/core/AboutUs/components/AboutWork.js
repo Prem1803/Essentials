@@ -5,7 +5,7 @@ const AboutWork = () => {
     <div className="about-working">
       <div className="container">
         <div className="row">
-          <div className="grocino-heading">
+          <div className="essential-heading">
             <h1 className="heading_text"> About Us </h1>
 
             <div className="graph graph-sm">
@@ -15,7 +15,7 @@ const AboutWork = () => {
         </div>
 
         <div className="row">
-          <div className=" grocino-owl">
+          <div className=" essential-owl">
             <div className="item">
               <div className="row">
                 <div className="col-12 col-xl-6">

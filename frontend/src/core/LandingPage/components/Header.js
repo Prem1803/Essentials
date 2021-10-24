@@ -18,8 +18,8 @@ const Header = () => {
 
   return (
     <div className="home-header">
-      <header className="grocino-header clearfix">
-        <div className="grocino-top-header d-lg-block d-xl-block">
+      <header className="essential-header clearfix">
+        <div className="essential-top-header d-lg-block d-xl-block">
           <div className="row">
             <div className="col-12 col-md-4 col-sm-12">
               <div className="top-left">
@@ -332,7 +332,7 @@ const Header = () => {
         </div>
       </header>
 
-      <div id="grocino-homebanner">
+      <div id="essential-homebanner">
         <div className="swiper-container">
           <div className="swiper-wrapper">
             <Slider slide={`swiper-slide slide-${slider}`} />

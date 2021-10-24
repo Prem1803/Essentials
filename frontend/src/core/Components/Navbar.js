@@ -27,8 +27,8 @@ const Navbar = () => {
       </div>
 
       <div className="home-header home-header2">
-        <header className="grocino-header clearfix">
-          <div className="grocino-top-header d-block d-xl-none d-lg-none">
+        <header className="essential-header clearfix">
+          <div className="essential-top-header d-block d-xl-none d-lg-none">
             <div className="row">
               <div className="col-12 col-md-4 col-sm-12">
                 <div className="essential-logo text-left">

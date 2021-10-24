@@ -6,7 +6,7 @@ import LatestItems from "./components/LatestItems";
 
 const Home = () => {
   return (
-    <div className="grocino-home">
+    <div className="essential-home">
       <Header />
       <ItemsOnSale />
       <LatestItems />

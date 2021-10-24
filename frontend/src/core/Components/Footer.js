@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="grocino-footer2">
-      <div id="grocino-footer" className="footer-container">
-        <div className="grocino-footer-row">
+    <div className="essential-footer2">
+      <div id="essential-footer" className="footer-container">
+        <div className="essential-footer-row">
           <div className="container">
             <div className="row">
               <div className="col-lg-3 col-md-6 col-sm-6 mr-auto">
-                <div className="grocino-second-row-item">
+                <div className="essential-second-row-item">
                   <Link to="/">
                     <img
                       src="img/logos/white-logo.png"
@@ -60,7 +60,7 @@ const Footer = () => {
               </div>
 
               <div className="col-lg-2 col-md-6 col-sm-6 mx-auto">
-                <div className="grocino-second-row-item">
+                <div className="essential-second-row-item">
                   <h4>Useful Links</h4>
 
                   <ul>
@@ -82,7 +82,7 @@ const Footer = () => {
               </div>
 
               <div className="col-lg-3 col-md-6 col-sm-6">
-                <div className="grocino-second-row-item">
+                <div className="essential-second-row-item">
                   <h4>Customer Service</h4>
 
                   <ul>
@@ -102,7 +102,7 @@ const Footer = () => {
               </div>
 
               <div className="col-lg-2 col-md-6 col-sm-6">
-                <div className="grocino-second-row-item">
+                <div className="essential-second-row-item">
                   <h4>My Account</h4>
 
                   <ul>

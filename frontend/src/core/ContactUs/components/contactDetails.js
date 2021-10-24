@@ -5,7 +5,7 @@ const ContactDetails = () => {
     <div className="contact-section">
       <div className="container">
         <div className="row">
-          <div className="grocino-heading">
+          <div className="essential-heading">
             <h1 className="heading_text"> Contact Us </h1>
 
             <div className="graph graph-sm">
