@@ -6,6 +6,7 @@ import AboutUs from "./core/AboutUs/AboutUs";
 import ContactUs from "./core/ContactUs/ContactUs";
 import Login from "./core/Login/Login";
 import Register from "./core/Register/Register";
+import Cart from "./core/Cart/Cart";
 
 const App = () => {
   return (
@@ -14,14 +15,13 @@ const App = () => {
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/register" element={<Register />}></Route>
+        <Route exact path="/my-cart" element={<Cart />}></Route>
         <Route exact path="/about-us" element={<AboutUs />}></Route>
         <Route exact path="/contact-us" element={<ContactUs />}></Route>
         {/* To Do
         /categories
-        /register
         /register-seller
         /search-groceries
-        /my-cart
         /profile
         /settings
         /logout  

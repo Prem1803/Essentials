@@ -5612,6 +5612,9 @@ a.read-moreblog:hover {
   font-size: 22px;
   font-weight: 500;
 }
+.cart-detail {
+  width: 100%;
+}
 
 .cart-detail .form-control {
   border: 1px solid #757575;
