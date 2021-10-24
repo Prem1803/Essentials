@@ -52,7 +52,9 @@ const Navbar = () => {
                         title="Cart"
                       >
                         <i className="fas fa-shopping-cart"></i>{" "}
-                        <span className="amount">$250.00</span>
+                        <span className="amount">
+                          <i className="fas fa-rupee-sign"></i> 250.00
+                        </span>
                       </Link>
                     </li>
 
@@ -290,7 +292,9 @@ const Navbar = () => {
                             title="Cart"
                           >
                             <i className="fas fa-shopping-cart"></i>{" "}
-                            <span className="amount">$250.00</span>
+                            <span className="amount">
+                              <i className="fas fa-rupee-sign"></i> 250.00
+                            </span>
                           </Link>
                         </li>
 

@@ -5,6 +5,7 @@ import Home from "./core/LandingPage/Home";
 import AboutUs from "./core/AboutUs/AboutUs";
 import ContactUs from "./core/ContactUs/ContactUs";
 import Login from "./core/Login/Login";
+import Register from "./core/Register/Register";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
+        <Route exact path="/register" element={<Register />}></Route>
         <Route exact path="/about-us" element={<AboutUs />}></Route>
         <Route exact path="/contact-us" element={<ContactUs />}></Route>
         {/* To Do
