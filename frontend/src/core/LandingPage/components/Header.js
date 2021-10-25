@@ -104,16 +104,11 @@ const Header = () => {
                           }}
                         >
                           <div className="item city-item" data-value="1">
-                            <Link to="/settings">
-                              <i className="fas fa-user-cog"></i> Setting
-                            </Link>
-                          </div>
-                          <div className="item city-item" data-value="2">
                             <Link to="/profile">
                               <i className="fas fa-user-alt"></i> Profile
                             </Link>
                           </div>
-                          <div className="item city-item" data-value="3">
+                          <div className="item city-item" data-value="2">
                             <Link to="/logout">
                               <i className="fas fa-sign-out-alt"></i> Logout
                             </Link>

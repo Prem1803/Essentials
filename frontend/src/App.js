@@ -7,6 +7,7 @@ import ContactUs from "./core/ContactUs/ContactUs";
 import Login from "./core/Login/Login";
 import Register from "./core/Register/Register";
 import Cart from "./core/Cart/Cart";
+import UserProfile from "./core/UserProfile/UserProfile";
 
 const App = () => {
   return (
@@ -18,12 +19,13 @@ const App = () => {
         <Route exact path="/my-cart" element={<Cart />}></Route>
         <Route exact path="/about-us" element={<AboutUs />}></Route>
         <Route exact path="/contact-us" element={<ContactUs />}></Route>
+
+        <Route exact path="/profile" element={<UserProfile />}></Route>
+
         {/* To Do
         /categories
         /register-seller
         /search-groceries
-        /profile
-        /settings
         /logout  
         */}
       </Routes>
