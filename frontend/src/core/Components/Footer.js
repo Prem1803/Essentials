@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+const Footer = ({ level }) => {
+  const [path, setPath] = useState("");
+  useEffect(() => {
+    if (level) {
+      let levelsBack = "";
+
+      for (let i = 0; i < level; i++) {
+        levelsBack += "../";
+      }
+      setPath(levelsBack);
+    }
+  }, []);
   return (
     <div className="essential-footer2">
       <div id="essential-footer" className="footer-container">
@@ -12,7 +23,7 @@ const Footer = () => {
                 <div className="essential-second-row-item">
                   <Link to="/">
                     <img
-                      src="img/logos/white-logo.png"
+                      src={`${path}img/logos/white-logo.png`}
                       alt="Essential Logo"
                       title="Essential Logo"
                       className="img-fluid logo"
@@ -30,7 +41,7 @@ const Footer = () => {
                   <li className="list-inline-item">
                     <a href="https://www.instagram.com/prem_0318/">
                       <img
-                        src="img/logos/instagram.png"
+                        src={`${path}img/logos/instagram.png`}
                         alt="Instagram"
                         title="Instagram"
                       />
@@ -40,7 +51,7 @@ const Footer = () => {
                   <li className="list-inline-item">
                     <a href="https://www.linkedin.com/in/prem-kumar-nitd/">
                       <img
-                        src="img/logos/linkedIn.png"
+                        src={`${path}img/logos/linkedIn.png`}
                         alt="Twitter"
                         title="Twitter"
                       />
@@ -50,7 +61,7 @@ const Footer = () => {
                   <li className="list-inline-item">
                     <a href="https://github.com/Prem1803">
                       <img
-                        src="img/logos/github.png"
+                        src={`${path}img/logos/github.png`}
                         alt="Instagram"
                         title="Instagram"
                       />

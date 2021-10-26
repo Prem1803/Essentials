@@ -1797,6 +1797,13 @@ li.footer-pay-logo {
   font-weight: 600;
   color: #f55d2c;
 }
+.product-areaholder .product-holder .p-buttonarea .less-margin {
+  margin-left: 1rem;
+  vertical-align: top;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f55d2c;
+}
 
 .product-areaholder .product-holder .p-buttonarea div.btn {
   color: #fff !important;
@@ -4186,12 +4193,6 @@ a.read-moreblog:hover {
   font-size: 16px;
 }
 
-.category-sidebar .filter-group .list-menu a:before {
-  content: "\f105";
-  font-family: "Font Awesome 5 Pro";
-  margin-right: 15px;
-}
-
 .category-sidebar .filter-group .list-menu a span {
   float: right;
 }
@@ -4296,10 +4297,12 @@ a.read-moreblog:hover {
   font-size: 12px;
 }
 
-#category-filter .product-holder .p-price span {
+#category-filter .product-holder .p-price span,
+#category-filter .product-holder .p-buttonarea span {
   color: #45b144;
   letter-spacing: 1px;
   font-size: 12px;
+  float: right;
 }
 
 .list_inline {

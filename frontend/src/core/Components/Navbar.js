@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const Navbar = () => {
+const Navbar = ({ level }) => {
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
+  const [path, setPath] = useState("");
+  useEffect(() => {
+    if (level) {
+      let levelsBack = "";
 
+      for (let i = 0; i < level; i++) {
+        levelsBack += "../";
+      }
+      setPath(levelsBack);
+    }
+  }, []);
   return (
     <>
       <div className="top-header">
@@ -34,8 +44,8 @@ const Navbar = () => {
                 <div className="essential-logo text-left">
                   <Link to="/">
                     <img
-                      src="img/logos/logo.png"
-                      alt="Grocery Product "
+                      src={`${path}img/logos/logo.png`}
+                      alt="Essential Logo "
                       className="img-fluid"
                     />
                   </Link>
@@ -61,7 +71,7 @@ const Navbar = () => {
                     <li className="account-view">
                       <Link to="/profile">
                         <img
-                          src="img/logos/profile-img.png"
+                          src={`${path}img/logos/profile-img.png`}
                           alt="Profile"
                           title="Profile"
                         />
@@ -114,7 +124,7 @@ const Navbar = () => {
                               <Link to="/">
                                 {" "}
                                 <img
-                                  src="img/logos/white-logo.png"
+                                  src={`${path}img/logos/white-logo.png`}
                                   alt="Essential Logo"
                                   className="img-fluid"
                                 />{" "}
@@ -207,8 +217,8 @@ const Navbar = () => {
                     <div className="essential-logo text-left">
                       <Link to="/">
                         <img
-                          src="img/logos/logo.png"
-                          alt="Grocery Product "
+                          src={`${path}img/logos/logo.png`}
+                          alt="Essential Logo "
                           className="img-fluid"
                         />
                       </Link>
@@ -301,7 +311,7 @@ const Navbar = () => {
                         <li className="account-view">
                           <Link to="/profile">
                             <img
-                              src="img/logos/profile-img.png"
+                              src={`${path}img/logos/profile-img.png`}
                               alt="Profile"
                               title="Profile"
                             />

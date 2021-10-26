@@ -9,6 +9,7 @@ import Register from "./core/Register/Register";
 import Cart from "./core/Cart/Cart";
 import UserProfile from "./core/UserProfile/UserProfile";
 import AllCategories from "./core/AllCategories/AllCategories";
+import CategoryWiseProducts from "./core/CategoryWiseProducts/CategoryWiseProducts";
 
 const App = () => {
   return (
@@ -21,11 +22,15 @@ const App = () => {
         <Route exact path="/about-us" element={<AboutUs />}></Route>
         <Route exact path="/contact-us" element={<ContactUs />}></Route>
         <Route exact path="/categories" element={<AllCategories />}></Route>
+        <Route
+          exact
+          path="/categories/:category"
+          element={<CategoryWiseProducts />}
+        ></Route>
 
         <Route exact path="/profile" element={<UserProfile />}></Route>
 
         {/* To Do
-        /categories
         /register-seller
         /search-groceries
         /logout  
