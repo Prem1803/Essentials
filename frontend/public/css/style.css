@@ -3969,7 +3969,17 @@ a.read-moreblog:hover {
   padding: 30px 10px 20px;
   transition: all 0.5s ease;
 }
+.category-border .buttons i {
+  font-size: 24px;
+  margin-right: 5px;
+  color: #f46432;
+}
 
+.category-border .buttons .btn-orange i {
+  font-size: 24px;
+  margin-right: 5px;
+  color: #f3f3f3;
+}
 .category-boxholder .btn {
   display: inline-flex;
   align-items: center;
