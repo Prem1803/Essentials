@@ -10,6 +10,7 @@ import Cart from "./core/Cart/Cart";
 import UserProfile from "./core/UserProfile/UserProfile";
 import AllCategories from "./core/AllCategories/AllCategories";
 import CategoryWiseProducts from "./core/CategoryWiseProducts/CategoryWiseProducts";
+import SearchWiseProducts from "./core/CategoryWiseProducts/SearchWiseProducts";
 
 const App = () => {
   return (
@@ -24,6 +25,11 @@ const App = () => {
         <Route exact path="/categories" element={<AllCategories />}></Route>
         <Route
           exact
+          path="/search-groceries"
+          element={<SearchWiseProducts />}
+        ></Route>
+        <Route
+          exact
           path="/categories/:category"
           element={<CategoryWiseProducts />}
         ></Route>
@@ -32,7 +38,6 @@ const App = () => {
 
         {/* To Do
         /register-seller
-        /search-groceries
         /logout  
         */}
       </Routes>

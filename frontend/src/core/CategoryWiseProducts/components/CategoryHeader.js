@@ -1,13 +1,15 @@
 import React from "react";
 
-const CategoryHeader = () => {
+const CategoryHeader = ({ search, setSearch }) => {
   return (
     <div className="row">
       <div className="col-12 col-xl-9 col-lg-8 col-md-8 col-sm-12">
         <div className="grid-top">
           <div className="row">
             <div className="col-12 col-xl-9 col-lg-8 col-md-6 col-sm-12">
-              <h1 className="heading1">Dairy & Bakery</h1>
+              <h1 className="heading1">
+                {search ? "Your Search Result Here" : "Dairy & Bakery"}
+              </h1>
               <p>Showing result 1-22 of 22 result</p>
             </div>
 
@@ -18,6 +20,9 @@ const CategoryHeader = () => {
                   name="search"
                   className="form-control"
                   placeholder="Search Product"
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
                 />
                 <span className="input-icon">
                   <i className="fa fa-search" aria-hidden="true"></i>
