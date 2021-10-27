@@ -6736,6 +6736,12 @@ select:focus-visible {
   width: 100%;
   border-radius: 5px;
 }
+.product_details .detail_left .img-product img {
+  width: 100%;
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 5px;
+}
 
 .product_details .detail_left .small_products img:hover {
   border: 1px solid #f46432;
@@ -6805,7 +6811,10 @@ select:focus-visible {
 .detail_mid {
   margin: 80px 0;
 }
-
+.detail_mid .media .media-left img {
+  width: 100%;
+  max-width: 80px;
+}
 .detail_right h2 {
   font-size: 25px;
   font-weight: 500;
@@ -6845,6 +6854,7 @@ select:focus-visible {
   font-size: 22px;
   color: #f46432;
   font-weight: 600;
+  min-width: 200px;
 }
 
 .detail_right .social_icons {

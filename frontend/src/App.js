@@ -11,6 +11,7 @@ import UserProfile from "./core/UserProfile/UserProfile";
 import AllCategories from "./core/AllCategories/AllCategories";
 import CategoryWiseProducts from "./core/CategoryWiseProducts/CategoryWiseProducts";
 import SearchWiseProducts from "./core/CategoryWiseProducts/SearchWiseProducts";
+import SingleProduct from "./core/SingleProduct/SingleProduct";
 
 const App = () => {
   return (
@@ -32,6 +33,11 @@ const App = () => {
           exact
           path="/categories/:category"
           element={<CategoryWiseProducts />}
+        ></Route>
+        <Route
+          exact
+          path="/product/:product"
+          element={<SingleProduct />}
         ></Route>
 
         <Route exact path="/profile" element={<UserProfile />}></Route>
