@@ -73,7 +73,7 @@ const ContactDetails = () => {
 
               <form method="post">
                 <div className="form-group">
-                  <label for="input-name">Name</label>
+                  <label htmlFor="input-name">Name</label>
 
                   <input
                     type="text"
@@ -87,7 +87,7 @@ const ContactDetails = () => {
                 </div>
 
                 <div className="form-group">
-                  <label for="input-email">E-mail id</label>
+                  <label htmlFor="input-email">E-mail id</label>
 
                   <input
                     type="email"
@@ -101,7 +101,7 @@ const ContactDetails = () => {
                 </div>
 
                 <div className="form-group">
-                  <label for="input-msg">Message</label>
+                  <label htmlFor="input-msg">Message</label>
 
                   <textarea
                     id="input-msg"

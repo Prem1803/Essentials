@@ -7,7 +7,7 @@ const OrderDetails = () => {
       <div className="row">
         <div className="pl-xl-5 col-lg-8 col-md-8 col-sm-12">
           <div className="form-group">
-            <label for="input-promocode">Have a promocode</label>
+            <label htmlFor="input-promocode">Have a promocode</label>
 
             <div className="input-group">
               <input

@@ -18,7 +18,7 @@ const ProfileDetails = () => {
                       accept=".png, .jpg, .jpeg"
                     ></input>
 
-                    <label for="imgUpload"></label>
+                    <label htmlFor="imgUpload"></label>
                   </div>
 
                   <div className="profile-preview">
@@ -32,7 +32,7 @@ const ProfileDetails = () => {
               <div className="eleven wide field">
                 <div className="fields">
                   <div className="field">
-                    <label for="input_emailid"> Email id</label>
+                    <label htmlFor="input_emailid"> Email id</label>
 
                     <input
                       type="email"
@@ -45,7 +45,7 @@ const ProfileDetails = () => {
 
                 <div className="fields">
                   <div className="field">
-                    <label for="input_number"> Mobile Number</label>
+                    <label htmlFor="input_number"> Mobile Number</label>
 
                     <input
                       type="tel"
@@ -61,7 +61,7 @@ const ProfileDetails = () => {
             <div className="field mb-0">
               <div className="fields">
                 <div className="field">
-                  <label for="input_fname"> First name</label>
+                  <label htmlFor="input_fname"> First name</label>
 
                   <input
                     type="text"
@@ -72,7 +72,7 @@ const ProfileDetails = () => {
                 </div>
 
                 <div className="field">
-                  <label for="input_lname"> Last name</label>
+                  <label htmlFor="input_lname"> Last name</label>
 
                   <input
                     type="text"
@@ -85,7 +85,10 @@ const ProfileDetails = () => {
 
               <div className="fields">
                 <div className="field">
-                  <label for="input_altnumber"> Alternate Mobile Number</label>
+                  <label htmlFor="input_altnumber">
+                    {" "}
+                    Alternate Mobile Number
+                  </label>
 
                   <input
                     type="tel"
@@ -96,7 +99,7 @@ const ProfileDetails = () => {
                 </div>
 
                 <div className="field">
-                  <label for="input_gender"> Gender</label>
+                  <label htmlFor="input_gender"> Gender</label>
 
                   <span className="custom-dropdown">
                     <select name="gender" id="input_gender">
@@ -114,7 +117,7 @@ const ProfileDetails = () => {
 
               <div className="fields">
                 <div className="field">
-                  <label for="input_fname"> House Number</label>
+                  <label htmlFor="input_fname"> House Number</label>
 
                   <input
                     type="text"
@@ -124,7 +127,7 @@ const ProfileDetails = () => {
                   />
                 </div>
                 <div className="field">
-                  <label for="input_fname"> Area/Locality</label>
+                  <label htmlFor="input_fname"> Area/Locality</label>
 
                   <input
                     type="text"
@@ -136,7 +139,7 @@ const ProfileDetails = () => {
               </div>
               <div className="fields">
                 <div className="field">
-                  <label for="input_fname"> City</label>
+                  <label htmlFor="input_fname"> City</label>
 
                   <input
                     type="text"
@@ -147,7 +150,7 @@ const ProfileDetails = () => {
                 </div>
 
                 <div className="field">
-                  <label for="input_lname"> State</label>
+                  <label htmlFor="input_lname"> State</label>
 
                   <input
                     type="text"

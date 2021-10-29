@@ -9,8 +9,12 @@ app.use(cors());
 
 const port = process.env.PORT || 8000;
 const AuthRouter = require("./routers/AuthRoutes");
+const UserRouter = require("./routers/UserRoutes");
+const FileRouter = require("./routers/FileRoutes");
 
 app.use(AuthRouter);
+app.use(UserRouter);
+app.use(FileRouter);
 
 app.listen(port, () => {
   console.log(`HTTP Server is running on port ${port}`);
