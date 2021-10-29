@@ -8,6 +8,9 @@ app.use(express.json());
 app.use(cors());
 
 const port = process.env.PORT || 8000;
+const AuthRouter = require("./routers/AuthRoutes");
+
+app.use(AuthRouter);
 
 app.listen(port, () => {
   console.log(`HTTP Server is running on port ${port}`);
