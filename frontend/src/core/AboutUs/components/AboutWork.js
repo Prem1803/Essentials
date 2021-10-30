@@ -15,7 +15,7 @@ const AboutWork = () => {
         </div>
 
         <div className="row">
-          <div className=" essential-owl">
+          <div className=" essential">
             <div className="item">
               <div className="row">
                 <div className="col-12 col-xl-6">
