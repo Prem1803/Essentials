@@ -29,7 +29,7 @@ UserRouter.post(
         for (const file of req.files) {
           mediaFiles.push(file.filename);
         }
-        user.profile = mediaFiles[0];
+        if (mediaFiles[0]) user.profile = mediaFiles[0];
       }
       for (const update of updateObject) {
         if (update === "email") {
