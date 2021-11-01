@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { logout } from "../../../actions/UserActions";
 const UserSidebar = ({ currentTab, setCurrentTab }) => {
+  const dispatch = useDispatch();
+
+  const LogoutUser = () => {
+    dispatch(logout());
+  };
   return (
     <div className="col-md-3 mb-3 pr-xl-5">
       <h2>Account</h2>
@@ -48,7 +54,7 @@ const UserSidebar = ({ currentTab, setCurrentTab }) => {
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link" to="/logout">
+          <Link className="nav-link" to="/" onClick={LogoutUser}>
             <i className="fa fa-sign-out"> </i> Logout
           </Link>
         </li>

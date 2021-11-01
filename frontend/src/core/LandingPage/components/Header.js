@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import store from "../../../store";
 import Slider from "./Slider";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../actions/UserActions";
 const Header = () => {
   const [slider, setSlider] = useState(2);
   const [fullScreen, setFullScreen] = useState(false);
@@ -14,6 +17,27 @@ const Header = () => {
   const decrementSlider = () => {
     if (slider > 1) setSlider(slider - 1);
     else setSlider(6);
+  };
+
+  const [user, setUser] = useState(false);
+  let userLogin = store.getState().userLogin;
+  useEffect(() => {
+    if (userLogin.token) setUser(true);
+  }, []);
+
+  store.subscribe(() => {
+    userLogin = store.getState().userLogin;
+    if (userLogin.token) {
+      setUser(true);
+    } else {
+      setUser(false);
+    }
+  });
+
+  const dispatch = useDispatch();
+
+  const LogoutUser = () => {
+    dispatch(logout());
   };
 
   return (
@@ -87,36 +111,47 @@ const Header = () => {
                     </div>
                   </li>
 
-                  <li className="dropdown-cartview account-view">
-                    <div className="ui dropdown accounts" tabindex="0">
-                      <i
-                        className="fas fa-user user-topicon"
-                        onMouseEnter={() => {
-                          setShowProfile(true);
-                        }}
-                      ></i>
-
-                      {showProfile && (
-                        <div
-                          className="menu"
-                          onMouseLeave={() => {
-                            setShowProfile(false);
+                  {user ? (
+                    <li className="dropdown-cartview account-view">
+                      <div className="ui dropdown accounts" tabindex="0">
+                        <i
+                          className="fas fa-user user-topicon"
+                          onMouseEnter={() => {
+                            setShowProfile(true);
                           }}
-                        >
-                          <div className="item city-item" data-value="1">
-                            <Link to="/profile">
-                              <i className="fas fa-user-alt"></i> Profile
-                            </Link>
+                        ></i>
+
+                        {showProfile && (
+                          <div
+                            className="menu"
+                            onMouseLeave={() => {
+                              setShowProfile(false);
+                            }}
+                          >
+                            <div className="item city-item" data-value="1">
+                              <Link to="/profile">
+                                <i className="fas fa-user-alt"></i> Profile
+                              </Link>
+                            </div>
+                            <div className="item city-item" data-value="2">
+                              <Link to="/" onClick={LogoutUser}>
+                                <i className="fas fa-sign-out-alt"></i> Logout
+                              </Link>
+                            </div>
                           </div>
-                          <div className="item city-item" data-value="2">
-                            <Link to="/logout">
-                              <i className="fas fa-sign-out-alt"></i> Logout
-                            </Link>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </li>
+                        )}
+                      </div>
+                    </li>
+                  ) : (
+                    <li className="dropdown-cartview">
+                      <Link
+                        to="/login"
+                        className="pull-bs-canvas-right userpanel-link"
+                      >
+                        <i className="fas fa-sign-in-alt"></i>
+                      </Link>
+                    </li>
+                  )}
                   <li className="dropdown-cartview">
                     <Link
                       to="/my-cart"

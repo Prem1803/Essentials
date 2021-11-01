@@ -1,7 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../../actions/UserActions";
+import store from "../../../store";
+import InlineLoader from "../../Components/InlineLoader";
 
 const LoginForm = () => {
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  let userLogin = store.getState().userLogin;
+  let navigate = useNavigate();
+
+  const loginRequest = (e) => {
+    e.preventDefault();
+    dispatch(login({ username, password }));
+  };
+
+  store.subscribe(() => {
+    userLogin = store.getState().userLogin;
+    if (userLogin.loading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+    if (userLogin.token) {
+      navigate("/");
+    }
+  });
   return (
     <div className="essential-form">
       <div className="container">
@@ -24,6 +51,9 @@ const LoginForm = () => {
                     name="number"
                     placeholder="Enter Email/Mobile Number"
                     required
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
                   />
                 </div>
 
@@ -35,6 +65,9 @@ const LoginForm = () => {
                     name="password"
                     placeholder="Enter Password"
                     required
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                   />
                 </div>
               </div>
@@ -45,8 +78,13 @@ const LoginForm = () => {
                 </span>
               </div>
 
-              <button className="btn btn-orange btn-block" type="submit">
+              <button
+                className="btn btn-orange btn-block"
+                onClick={loginRequest}
+                disabled={loading}
+              >
                 Sign In
+                {loading && <InlineLoader />}
               </button>
 
               <div className="text-center">

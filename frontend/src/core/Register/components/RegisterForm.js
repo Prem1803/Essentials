@@ -1,7 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { register } from "../../../actions/UserActions";
+import store from "../../../store";
+import InlineLoader from "../../Components/InlineLoader";
 const RegisterForm = () => {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  let userRegister = store.getState().userRegister;
+  let navigate = useNavigate();
+
+  const registerRequest = (e) => {
+    e.preventDefault();
+    dispatch(register({ fullName, email, mobileNumber, password }));
+  };
+
+  store.subscribe(() => {
+    userRegister = store.getState().userRegister;
+    if (userRegister.loading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+    if (userRegister.token) {
+      navigate("/");
+    }
+  });
   return (
     <div className="essential-form">
       <div className="container">
@@ -24,6 +52,9 @@ const RegisterForm = () => {
                     name="name"
                     placeholder="Full Name"
                     required
+                    onChange={(e) => {
+                      setFullName(e.target.value);
+                    }}
                   />
                 </div>
 
@@ -34,6 +65,9 @@ const RegisterForm = () => {
                     name="email"
                     placeholder="Enter Your Email"
                     required
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
                   />
                 </div>
 
@@ -45,6 +79,9 @@ const RegisterForm = () => {
                     name="number"
                     placeholder="Enter Mobile Number"
                     required
+                    onChange={(e) => {
+                      setMobileNumber(e.target.value);
+                    }}
                   />
                 </div>
 
@@ -55,6 +92,9 @@ const RegisterForm = () => {
                     name="passowrd"
                     placeholder="Enter Password"
                     required
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="ui left icon input w-100 field">
@@ -68,8 +108,13 @@ const RegisterForm = () => {
                 </div>
               </div>
 
-              <button className="btn btn-orange btn-block" type="submit">
+              <button
+                className="btn btn-orange btn-block"
+                onClick={registerRequest}
+                disabled={loading}
+              >
                 Sign Up
+                {loading && <InlineLoader />}
               </button>
 
               <div className="text-center">

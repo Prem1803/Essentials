@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../actions/UserActions";
 
 const Footer = ({ level }) => {
   const [path, setPath] = useState("");
+  const dispatch = useDispatch();
+
+  const LogoutUser = () => {
+    dispatch(logout());
+  };
   useEffect(() => {
     if (level) {
       let levelsBack = "";
@@ -122,7 +129,9 @@ const Footer = ({ level }) => {
                     </li>
 
                     <li>
-                      <Link to="/logout">Logout</Link>
+                      <Link to="/" onClick={LogoutUser}>
+                        Logout
+                      </Link>
                     </li>
                   </ul>
                 </div>

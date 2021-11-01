@@ -13,5 +13,6 @@
   "dependencies": {
     "concurrently": "^6.5.1",
     "nodemon": "^2.0.15"
-  }
+  },
+  "proxy": "http://localhost:8000/"
 }

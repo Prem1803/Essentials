@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import store from "../../store";
 const Navbar = ({ level }) => {
   const [showCategories, setShowCategories] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
+  const [user, setUser] = useState(false);
   const [path, setPath] = useState("");
+
+  let userLogin = store.getState().userLogin;
+  useEffect(() => {
+    if (userLogin.token) setUser(true);
+  }, []);
+  store.subscribe(() => {
+    userLogin = store.getState().userLogin;
+    if (userLogin.token) {
+      setUser(true);
+    } else {
+      setUser(false);
+    }
+  });
   useEffect(() => {
     if (level) {
       let levelsBack = "";
@@ -14,6 +29,7 @@ const Navbar = ({ level }) => {
       setPath(levelsBack);
     }
   }, []);
+
   return (
     <>
       <div className="top-header">
@@ -68,15 +84,23 @@ const Navbar = ({ level }) => {
                       </Link>
                     </li>
 
-                    <li className="account-view">
-                      <Link to="/profile">
-                        <img
-                          src={`${path}img/logos/profile-img.png`}
-                          alt="Profile"
-                          title="Profile"
-                        />
-                      </Link>
-                    </li>
+                    {user ? (
+                      <li className="account-view">
+                        <Link to="/profile">
+                          <img
+                            src={`${path}img/logos/profile-img.png`}
+                            alt="Profile"
+                            title="Profile"
+                          />
+                        </Link>
+                      </li>
+                    ) : (
+                      <li className="account-view">
+                        <Link to="/login">
+                          <i className="fas fa-sign-in-alt"></i>
+                        </Link>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -308,15 +332,23 @@ const Navbar = ({ level }) => {
                           </Link>
                         </li>
 
-                        <li className="account-view">
-                          <Link to="/profile">
-                            <img
-                              src={`${path}img/logos/profile-img.png`}
-                              alt="Profile"
-                              title="Profile"
-                            />
-                          </Link>
-                        </li>
+                        {user ? (
+                          <li className="account-view">
+                            <Link to="/profile">
+                              <img
+                                src={`${path}img/logos/profile-img.png`}
+                                alt="Profile"
+                                title="Profile"
+                              />
+                            </Link>
+                          </li>
+                        ) : (
+                          <li className="account-view">
+                            <Link to="/login">
+                              <i className="fas fa-sign-in-alt"></i>
+                            </Link>
+                          </li>
+                        )}
                       </ul>
                     </div>
                   </div>

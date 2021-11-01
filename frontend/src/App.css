@@ -254,6 +254,69 @@ blockquote {
   line-height: 1.25;
 }
 
+#inline-spin {
+  display: inline-flex;
+  z-index: 9999;
+}
+#inline-spin::after {
+  content: "";
+  position: relative;
+  left: 48%;
+  top: 40%;
+  width: 30px;
+  height: 30px;
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
+  border-top-color: transparent;
+  border-width: 4px;
+  border-radius: 50%;
+  -webkit-animation: spin 0.8s linear infinite;
+  animation: spin 0.8s linear infinite;
+}
+#cover-spin {
+  position: fixed;
+  display: inline-flex;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+}
+#cover-spin::after {
+  content: "";
+  position: absolute;
+  left: 48%;
+  top: 40%;
+  width: 30px;
+  height: 30px;
+  border-style: solid;
+  border-color: black;
+  border-top-color: transparent;
+  border-width: 4px;
+  border-radius: 50%;
+  -webkit-animation: spin 0.8s linear infinite;
+  animation: spin 0.8s linear infinite;
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (min-width: 43.75em) {
   h1 {
     font-size: 2.5em;
@@ -1357,28 +1420,28 @@ li.footer-pay-logo {
 }
 
 #essential-homebanner .slide-2 {
-    background: url("./img/slider-2.jpg");
+  background: url("./img/slider-2.jpg");
 
   background-size: cover;
 }
 
 #essential-homebanner .slide-3 {
-    background: url("./img/slider-3.jpg");
+  background: url("./img/slider-3.jpg");
 
   background-size: cover;
 }
 #essential-homebanner .slide-4 {
-    background: url("./img/slider-4.jpg");
+  background: url("./img/slider-4.jpg");
 
   background-size: cover;
 }
 #essential-homebanner .slide-5 {
-    background: url("./img/slider-5.jpg");
+  background: url("./img/slider-5.jpg");
 
   background-size: cover;
 }
 #essential-homebanner .slide-6 {
-    background: url("./img/slider-6.jpg");
+  background: url("./img/slider-6.jpg");
 
   background-size: cover;
 }
@@ -1707,6 +1770,10 @@ li.footer-pay-logo {
 .home-header2 .account-view img {
   border-radius: 100%;
   max-width: 50px;
+}
+.home-header2 .account-view i {
+  font-size: 26px;
+  color: #f46432;
 }
 
 .home-header2 #essential-homebanner .slider-container {
@@ -3775,7 +3842,9 @@ a.read-moreblog:hover {
   margin-right: 5px;
   color: #f46432;
 }
-
+.btn-orange {
+  background-color: #f46432;
+}
 .category-border .buttons .btn-orange i {
   font-size: 24px;
   margin-right: 5px;

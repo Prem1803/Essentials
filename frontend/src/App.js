@@ -44,7 +44,6 @@ const App = () => {
 
         {/* To Do
         /register-seller
-        /logout  
         */}
       </Routes>
     </Router>
