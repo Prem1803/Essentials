@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { getAllCategories } from "../../actions/CategoryActions";
 import store from "../../store";
 const Navbar = ({ level }) => {
   const [showCategories, setShowCategories] = useState(false);
@@ -30,6 +32,21 @@ const Navbar = ({ level }) => {
     }
   }, []);
 
+  const dispatch = useDispatch();
+  const [categories, setCategories] = useState([]);
+
+  let category = store.getState().category;
+  store.subscribe(() => {
+    category = store.getState().category;
+
+    if (category.categories) {
+      setCategories(category.categories);
+    }
+  });
+  useEffect(() => {
+    setCategories(category.categories);
+    if (category.length === 0) dispatch(getAllCategories());
+  }, []);
   return (
     <>
       <div className="top-header">
@@ -200,21 +217,19 @@ const Navbar = ({ level }) => {
                                     All
                                   </Link>
 
-                                  <Link
-                                    to="/categories"
-                                    className="item"
-                                    data-value="2"
-                                  >
-                                    Dairy & Bakery
-                                  </Link>
-
-                                  <Link
-                                    to="/categories"
-                                    className="item"
-                                    data-value="3"
-                                  >
-                                    Dry fruits & Snacks
-                                  </Link>
+                                  {categories.map((category, index) => {
+                                    if (category)
+                                      return (
+                                        <Link
+                                          to={`/categories/${category._id}`}
+                                          className="item"
+                                          data-value="2"
+                                          key={index}
+                                        >
+                                          {category.title}
+                                        </Link>
+                                      );
+                                  })}
                                 </div>
                               )}
                             </div>
@@ -296,21 +311,19 @@ const Navbar = ({ level }) => {
                                   All
                                 </Link>
 
-                                <Link
-                                  to="/categories"
-                                  className="item"
-                                  data-value="2"
-                                >
-                                  Dairy & Bakery
-                                </Link>
-
-                                <Link
-                                  to="/categories"
-                                  className="item"
-                                  data-value="3"
-                                >
-                                  Dry fruits & Snacks
-                                </Link>
+                                {categories.map((category, index) => {
+                                  if (category)
+                                    return (
+                                      <Link
+                                        to={`/categories/${category._id}`}
+                                        className="item"
+                                        data-value="2"
+                                        key={index}
+                                      >
+                                        {category.title}
+                                      </Link>
+                                    );
+                                })}
                               </div>
                             )}
                           </div>

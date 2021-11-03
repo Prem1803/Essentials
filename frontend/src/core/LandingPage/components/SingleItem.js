@@ -48,7 +48,7 @@ const SingleItem = ({ product }) => {
             ) : (
               <img
                 src={ImageData && URL.createObjectURL(ImageData)}
-                className="img-fluid"
+                className="product-img-fluid"
                 alt="Product"
               />
             )}

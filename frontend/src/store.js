@@ -7,12 +7,14 @@ import {
   recentProductsReducer,
   popularProductsReducer,
 } from "./reducers/productReducers";
+import { categoryReducer } from "./reducers/categoryReducers";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   recentProducts: recentProductsReducer,
   popularProducts: popularProductsReducer,
+  category: categoryReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("essentialUser")

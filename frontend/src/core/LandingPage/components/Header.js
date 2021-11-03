@@ -4,6 +4,7 @@ import store from "../../../store";
 import Slider from "./Slider";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/UserActions";
+import { getAllCategories } from "../../../actions/CategoryActions";
 const Header = () => {
   const [slider, setSlider] = useState(2);
   const [showCategories, setShowCategories] = useState(false);
@@ -38,6 +39,21 @@ const Header = () => {
   const LogoutUser = () => {
     dispatch(logout());
   };
+
+  const [categories, setCategories] = useState([]);
+
+  let category = store.getState().category;
+  store.subscribe(() => {
+    category = store.getState().category;
+
+    if (category.categories) {
+      setCategories(category.categories);
+    }
+  });
+  useEffect(() => {
+    setCategories(category.categories);
+    if (category.length === 0) dispatch(getAllCategories());
+  }, []);
 
   return (
     <div className="home-header">
@@ -217,20 +233,19 @@ const Header = () => {
                                 >
                                   All
                                 </Link>
-                                <Link
-                                  to="/categories"
-                                  className="item"
-                                  data-value="2"
-                                >
-                                  Dairy & Bakery
-                                </Link>
-                                <Link
-                                  to="/categories"
-                                  className="item"
-                                  data-value="3"
-                                >
-                                  Dry fruits & Snacks
-                                </Link>
+                                {categories.map((category, index) => {
+                                  if (category)
+                                    return (
+                                      <Link
+                                        to={`/categories/${category._id}`}
+                                        className="item"
+                                        data-value="2"
+                                        key={index}
+                                      >
+                                        {category.title}
+                                      </Link>
+                                    );
+                                })}
                               </div>
                             )}
                           </div>
@@ -290,20 +305,19 @@ const Header = () => {
                             >
                               All
                             </Link>
-                            <Link
-                              to="/categories"
-                              className="item"
-                              data-value="2"
-                            >
-                              Dairy & Bakery
-                            </Link>
-                            <Link
-                              to="/categories"
-                              className="item"
-                              data-value="3"
-                            >
-                              Dry fruits & Snacks
-                            </Link>
+                            {categories.map((category, index) => {
+                              if (category)
+                                return (
+                                  <Link
+                                    to={`/categories/${category._id}`}
+                                    className="item"
+                                    data-value="2"
+                                    key={index}
+                                  >
+                                    {category.title}
+                                  </Link>
+                                );
+                            })}
                           </div>
                         )}
                       </div>
