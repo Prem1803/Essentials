@@ -12,3 +12,8 @@ export const APICore = async (endpoint, method, token, body) => {
   else if (method === "get") response = await axios.get(endpoint);
   return response.data;
 };
+
+export const FetchImage = async (imageName) => {
+  const data = await axios.get(`/media/${imageName}`, { responseType: "blob" });
+  return data.data;
+};

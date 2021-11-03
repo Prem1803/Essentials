@@ -9,7 +9,7 @@ const Slider = ({ slide }) => {
           <h4 className="slider-sub-title">Fresh Grocery product</h4>
           <div className="animated-area">
             <h1 className="slider-title">Home Delivery Available 24X7</h1>
-            <Link to="#" className="slider-buttton">
+            <Link to="/search-groceries" className="slider-buttton">
               Order Now
             </Link>
           </div>

@@ -73,7 +73,16 @@ const Navbar = ({ level }) => {
                   <ul className="list-inline">
                     <li className="dropdown-cartview">
                       <Link
-                        to="#"
+                        id="ser-input"
+                        className="userpanel-link"
+                        to="/search-groceries"
+                      >
+                        <i className="fa fa-search"></i>
+                      </Link>
+                    </li>
+                    <li className="dropdown-cartview">
+                      <Link
+                        to="/my-cart"
                         className="pull-bs-canvas-right userpanel-link middle-cart"
                         title="Cart"
                       >
@@ -310,6 +319,11 @@ const Navbar = ({ level }) => {
                         <li className="nav-item">
                           <Link className="nav-link" to="/contact-us">
                             Contact Us
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="/search-groceries">
+                            <i className="fa fa-search"></i>
                           </Link>
                         </li>
                       </ul>

@@ -274,14 +274,9 @@ blockquote {
   animation: spin 0.8s linear infinite;
 }
 #cover-spin {
-  position: fixed;
+  position: relative;
   display: inline-flex;
   width: 100%;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.7);
   z-index: 9999;
 }
 #cover-spin::after {
@@ -1840,7 +1835,8 @@ li.footer-pay-logo {
 }
 
 .product-areaholder .product-holder .p-price span {
-  margin-left: 8rem;
+  float: right;
+  letter-spacing: 2px;
   vertical-align: top;
   font-size: 18px;
   font-weight: 600;
@@ -1848,7 +1844,8 @@ li.footer-pay-logo {
 }
 
 .product-areaholder .product-holder .p-buttonarea span {
-  margin-left: 6rem;
+  float: right;
+
   vertical-align: top;
   font-size: 18px;
   font-weight: 600;
@@ -1884,7 +1881,10 @@ li.footer-pay-logo {
   border: 1px solid #2b2f4c !important;
   -webkit-box-shadow: -100px 0 0 #2b2f4c inset;
 }
-
+.img-fluid {
+  height: 200px;
+  width: 100%;
+}
 .btn-pcart {
   color: #fff !important;
   background: #f55d2c;
@@ -7920,10 +7920,11 @@ select:focus-visible {
     width: 300px;
   }
   .product-areaholder .product-holder .p-price span {
-    margin-left: 2.5rem;
+    letter-spacing: 1px;
+    float: right;
   }
   .product-areaholder .product-holder .p-buttonarea span {
-    margin-left: 0.5rem;
+    float: right;
   }
 
   .detail_right .qty_weight {

@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/UserActions";
 const Header = () => {
   const [slider, setSlider] = useState(2);
-  const [fullScreen, setFullScreen] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -73,42 +72,9 @@ const Header = () => {
               <div className="top-right text-right">
                 <ul className="list-inline">
                   <li>
-                    <div
-                      id="ser-input"
-                      className="userpanel-link"
-                      onClick={() => {
-                        setFullScreen(true);
-                      }}
-                    >
+                    <Link className="userpanel-link" to="/search-groceries">
                       <i className="fa fa-search"></i>
-                    </div>
-                    <div
-                      className={
-                        fullScreen
-                          ? "search-full-view search-normal-screen"
-                          : "search-full-view"
-                      }
-                    >
-                      <div className="input-group">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Search..."
-                        />
-                        <span className="input-group-addon">
-                          <i className="fa fa-search" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      <button
-                        className="btn btn-close"
-                        id="search-close"
-                        onClick={() => {
-                          setFullScreen(false);
-                        }}
-                      >
-                        <i className="fa fa-times" aria-hidden="true"></i>
-                      </button>
-                    </div>
+                    </Link>
                   </li>
 
                   {user ? (
