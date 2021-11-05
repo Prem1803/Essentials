@@ -1918,6 +1918,19 @@ li.footer-pay-logo {
   position: absolute;
 }
 
+.product-thumb .salebutton {
+  top: 0;
+  left: auto;
+  right: 15px;
+  margin: 0;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 8px;
+  font-weight: normal;
+  background: #28a745;
+  color: #fff;
+  position: absolute;
+}
 .product-areaholder .product-holder .p-buttonarea div.btn-wish {
   color: #f55d2c !important;
   border-radius: 5px;
@@ -1937,6 +1950,10 @@ li.footer-pay-logo {
 
 .product-areaholder .product-holder .p-buttonarea {
   margin: 15px 0px 10px 0px;
+}
+.product-pagination {
+  margin-top: 4rem;
+  padding-left: 45%;
 }
 
 .img-product,
@@ -4125,10 +4142,6 @@ a.read-moreblog:hover {
 
 #category-filter .product-list .img-product {
   min-width: 200px;
-}
-
-#category-filter .filter-products .col-12 {
-  padding-right: 34px;
 }
 
 .category-sidebar {
@@ -6371,10 +6384,6 @@ select:focus-visible {
 
   .home-header2 .slider-form form {
     width: 55%;
-  }
-
-  #category-filter .filter-products .col-12 {
-    padding-right: 15px;
   }
 
   .grid-top {

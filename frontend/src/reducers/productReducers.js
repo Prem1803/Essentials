@@ -5,6 +5,9 @@ import {
   POPULAR_PRODUCT_REQUEST,
   POPULAR_PRODUCT_SUCCESS,
   POPULAR_PRODUCT_FAIL,
+  PRODUCT_LIST_REQUEST,
+  PRODUCT_LIST_SUCCESS,
+  PRODUCT_LIST_FAIL,
 } from "../constants/productConstants";
 
 export const recentProductsReducer = (state = { products: [] }, action) => {
@@ -27,6 +30,23 @@ export const popularProductsReducer = (state = { products: [] }, action) => {
     case POPULAR_PRODUCT_SUCCESS:
       return { loading: false, products: action.payload };
     case POPULAR_PRODUCT_FAIL:
+      return { loading: false, products: [], error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const productListReducer = (state = { products: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_LIST_REQUEST:
+      return { loading: true, products: [] };
+    case PRODUCT_LIST_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload.products,
+        total: action.payload.total,
+      };
+    case PRODUCT_LIST_FAIL:
       return { loading: false, products: [], error: action.payload };
     default:
       return state;

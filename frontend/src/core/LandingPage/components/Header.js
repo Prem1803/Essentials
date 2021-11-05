@@ -52,7 +52,7 @@ const Header = () => {
   });
   useEffect(() => {
     setCategories(category.categories);
-    if (category.length === 0) dispatch(getAllCategories());
+    if (categories.length === 0) dispatch(getAllCategories());
   }, []);
 
   return (

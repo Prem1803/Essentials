@@ -97,7 +97,7 @@ ProductRouter.post("/products", async (req, res) => {
     if (!page || Number(page) < 1) page = 1;
     let products = [];
     let itemsToSkip = (Number(page) - 1) * Number(limit);
-
+    let total = 0;
     if (categoryId) {
       products = await Product.find({
         category: categoryId,
@@ -110,8 +110,34 @@ ProductRouter.post("/products", async (req, res) => {
         .sort({ updatedAt: -1 })
         .skip(itemsToSkip)
         .limit(limit);
+      total = await Product.find({
+        category: categoryId,
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { description: { $regex: search, $options: "i" } },
+          { features: { $regex: search, $options: "i" } },
+        ],
+      }).countDocuments();
+    } else {
+      products = await Product.find({
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { description: { $regex: search, $options: "i" } },
+          { features: { $regex: search, $options: "i" } },
+        ],
+      })
+        .sort({ updatedAt: -1 })
+        .skip(itemsToSkip)
+        .limit(limit);
+      total = await Product.find({
+        $or: [
+          { name: { $regex: search, $options: "i" } },
+          { description: { $regex: search, $options: "i" } },
+          { features: { $regex: search, $options: "i" } },
+        ],
+      }).countDocuments();
     }
-    res.status(200).send({ products });
+    res.status(200).send({ products, total });
   } catch (error) {
     res.status(400).send({ error: error.message });
   }

@@ -6,6 +6,7 @@ import { userLoginReducer, userRegisterReducer } from "./reducers/userReducers";
 import {
   recentProductsReducer,
   popularProductsReducer,
+  productListReducer,
 } from "./reducers/productReducers";
 import { categoryReducer } from "./reducers/categoryReducers";
 
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   recentProducts: recentProductsReducer,
   popularProducts: popularProductsReducer,
   category: categoryReducer,
+  products: productListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("essentialUser")
