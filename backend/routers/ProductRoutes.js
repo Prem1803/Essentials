@@ -88,6 +88,19 @@ ProductRouter.post("/product/delete", auth, async (req, res) => {
     res.status(400).send({ error: error.message });
   }
 });
+ProductRouter.post("/product/single", async (req, res) => {
+  try {
+    let { productId } = req.body;
+    if (!productId) throw new Error("Product not found.");
+    const product = await Product.findOne({
+      _id: productId,
+    });
+
+    res.status(200).send({ product });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
 
 ProductRouter.post("/products", async (req, res) => {
   try {

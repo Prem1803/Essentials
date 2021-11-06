@@ -6001,9 +6001,9 @@ select:focus-visible {
   color: #f46432;
   font-size: 18px;
 }
-
-.detail_right .rating li:last-child .fa {
+.detail_right .rating li .far {
   color: #757575;
+  font-size: 18px;
 }
 
 .detail_right p {

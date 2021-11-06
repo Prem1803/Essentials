@@ -7,6 +7,7 @@ import {
   recentProductsReducer,
   popularProductsReducer,
   productListReducer,
+  productReducer,
 } from "./reducers/productReducers";
 import { categoryReducer } from "./reducers/categoryReducers";
 
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   popularProducts: popularProductsReducer,
   category: categoryReducer,
   products: productListReducer,
+  product: productReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("essentialUser")

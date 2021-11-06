@@ -1,76 +1,120 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { FetchImage } from "../../../api/APICore";
+import CoverLoader from "../../Components/CoverLoader";
 
-const ProductDetails = () => {
+const ProductDetails = ({ product }) => {
+  const [images, setImages] = useState([]);
+  const [stars, setStars] = useState([]);
+  const [emptyStars, setEmptyStars] = useState([0, 1, 2, 3, 4]);
+  const [quantity, setQuantity] = useState(1);
+  const [currentImage, setCurrentImage] = useState(0);
+  useEffect(() => {
+    if (product && product.ratingCount && product.totalReviews) {
+      const { ratingCount, totalReviews } = product;
+      const rating = Number(ratingCount) / Number(totalReviews);
+      let starsArray = [];
+      let emptystarsArray = [];
+      for (var i = 0; i < rating; i++) starsArray.push(i);
+      for (i = 4; i > rating; i--) {
+        emptystarsArray.push(i);
+      }
+      setStars(starsArray);
+      setEmptyStars(emptystarsArray);
+    }
+    if (product && product.images) {
+      if (product.images.length > 0) {
+        const SetTheFetchedImage = async () => {
+          for (const eachimage of product.images) {
+            var data = await FetchImage(eachimage);
+            setImages((pre) => [...pre, data]);
+          }
+        };
+        SetTheFetchedImage();
+      }
+    }
+  }, [product]);
+  useEffect(() => {
+    console.log(images);
+  }, [images]);
   return (
     <div className="row">
       <div className="col-md-4">
         <div className="detail_left">
           <div className="zoom-in">
-            <img src="../img/cart-details/milk.png" alt="Product Image" />
+            {images.length < 1 ? (
+              <CoverLoader image={true} />
+            ) : (
+              <img
+                src={URL.createObjectURL(images[currentImage])}
+                className="product-img-fluid"
+                alt="Product"
+              />
+            )}
           </div>
 
           <ul className="list-inline small_products">
-            <li className="list-inline-item">
+            {/* <li className="list-inline-item">
               <div className="img-product">
-                <img src="../img/cart-details/milk.png" alt="Product Image" />
+                {images.length < 2 ? (
+                  <CoverLoader immage={true} />
+                ) : (
+                  <img src={URL.createObjectURL(images[1])} alt="Product" />
+                )}
               </div>
-            </li>
-            <li className="list-inline-item">
-              <div className="img-product">
-                <img src="../img/cart-details/milk.png" alt="Product Image" />
-              </div>
-            </li>
-            <li className="list-inline-item">
-              <div className="img-product">
-                <img src="../img/cart-details/milk.png" alt="Product Image" />
-              </div>
-            </li>
-
-            <li className="list-inline-item">
-              <div className="img-product">
-                <img src="../img/cart-details/milk.png" alt="Product Image" />
-              </div>
-            </li>
+            </li> */}
+            {images.map((image, index) => {
+              if (index !== currentImage) {
+                return (
+                  <li className="list-inline-item">
+                    <div
+                      className="img-product"
+                      onClick={() => {
+                        setCurrentImage(index);
+                      }}
+                    >
+                      <img src={URL.createObjectURL(image)} alt="Product" />
+                    </div>
+                  </li>
+                );
+              }
+            })}
           </ul>
         </div>
       </div>
 
       <div className="col-md-8">
         <div className="detail_right">
-          <h1>Fresh Cow Milk</h1>
+          <h1>{product && product.name}</h1>
 
           <ul className="list-inline rating">
-            <li className="list-inline-item">
-              <i className="fa fa-star" aria-hidden="true"></i>
-            </li>
-
-            <li className="list-inline-item">
-              <i className="fa fa-star" aria-hidden="true"></i>
-            </li>
-
-            <li className="list-inline-item">
-              <i className="fa fa-star" aria-hidden="true"></i>
-            </li>
-
-            <li className="list-inline-item">
-              <i className="fa fa-star" aria-hidden="true"></i>
-            </li>
-
-            <li className="list-inline-item">
-              <i className="fa fa-star" aria-hidden="true"></i>
-            </li>
+            {stars.map((index) => {
+              return (
+                <li className="list-inline-item">
+                  <i className="fa fa-star" key={index}></i>
+                </li>
+              );
+            })}
+            {emptyStars.map((index) => {
+              return (
+                <li className="list-inline-item">
+                  <i className="far fa-star" key={index}></i>
+                </li>
+              );
+            })}
           </ul>
 
-          <p>Fresh cow milk. Highly creamy and tasty.</p>
+          <p>{product && product.description}</p>
 
           <hr />
 
           <h2>Product Features</h2>
 
           <ul className="features">
-            <li>100% Fresh no Chemicals</li>
-
-            <li>100% Fresh Milk from Cow</li>
+            {product &&
+              product.features &&
+              product.features.map((feature, index) => {
+                return <li key={index}>{feature}</li>;
+              })}
           </ul>
 
           <hr className="mb-4" />
@@ -78,13 +122,13 @@ const ProductDetails = () => {
           <div className="d-inline-flex align-items-center w-100">
             <div className="price">
               {" "}
-              <i className="fas fa-rupee-sign"></i> 55.00
+              <i className="fas fa-rupee-sign"></i> {product && product.amount}
             </div>
 
             <div className="input-group qty_weight">
               <label>
                 {" "}
-                Qty weight <span>(In kg) </span>:
+                Qty weight <span>(In {product && product.quantityType}) </span>:
               </label>
 
               <span className="d-flex border">
@@ -92,9 +136,9 @@ const ProductDetails = () => {
                   <button
                     type="button"
                     className="btn btn-default btn-number"
-                    disabled="disabled"
-                    data-type="minus"
-                    data-field="quant[1]"
+                    onClick={(e) => {
+                      if (quantity > 1) setQuantity(quantity - 1);
+                    }}
                   >
                     <span className="fa fa-minus"></span>
                   </button>
@@ -102,10 +146,10 @@ const ProductDetails = () => {
 
                 <input
                   type="number"
-                  name="quant[1]"
                   className="form-control input-number"
-                  value="1"
+                  value={quantity}
                   min="1"
+                  onChange={(e) => setQuantity(e.target.value)}
                   max="10"
                 />
 
@@ -113,8 +157,9 @@ const ProductDetails = () => {
                   <button
                     type="button"
                     className="btn btn-default btn-number"
-                    data-type="plus"
-                    data-field="quant[1]"
+                    onClick={(e) => {
+                      if (quantity < 10) setQuantity(quantity + 1);
+                    }}
                   >
                     <span className="fa fa-plus"></span>
                   </button>
@@ -137,9 +182,6 @@ const ProductDetails = () => {
                   <div className="btn-wish">
                     <i className="far fa-heart"> </i>{" "}
                   </div>{" "}
-                  <div className="btn-wish">
-                    <i className="fas fa-eye"></i>
-                  </div>
                 </span>
               </div>
             </div>

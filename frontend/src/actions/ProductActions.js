@@ -10,6 +10,9 @@ import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
   PRODUCT_LIST_FAIL,
+  PRODUCT_REQUEST,
+  PRODUCT_SUCCESS,
+  PRODUCT_FAIL,
 } from "../constants/productConstants";
 
 export const getRecentProducts = () => async (dispatch) => {
@@ -69,6 +72,27 @@ export const getAllProducts = (requestBody) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: PRODUCT_LIST_FAIL,
+      payload:
+        e.response && e.response.data.error ? e.response.data.error : e.error,
+    });
+  }
+};
+
+export const getSingleProduct = (requestBody) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_REQUEST,
+    });
+
+    const data = await APICore("/product/single", "post", null, requestBody);
+
+    dispatch({
+      type: PRODUCT_SUCCESS,
+      payload: data.product,
+    });
+  } catch (e) {
+    dispatch({
+      type: PRODUCT_FAIL,
       payload:
         e.response && e.response.data.error ? e.response.data.error : e.error,
     });
