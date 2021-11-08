@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../models/User");
+const Product = require("../models/Product");
 const UserRouter = new express.Router();
 const upload = require("../utils/upload");
 const { auth } = require("../middlewares/authMiddleware");
@@ -70,4 +71,57 @@ UserRouter.post(
   }
 );
 
+UserRouter.post("/addToCart", auth, async (req, res) => {
+  try {
+    let { products } = req.body;
+    if (!products) products = [];
+
+    const userId = req.user._id;
+    let user = await User.findOne({ _id: userId });
+    for (const product of products) {
+      let { _id, quantity } = product;
+      if (!quantity) quantity = 1;
+      if (_id) user.cart.set(_id.toString(), { quantity });
+    }
+    await user.save();
+    res.status(200).send({ cart: user.cart });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+UserRouter.post("/removeFromCart", auth, async (req, res) => {
+  try {
+    let { product } = req.body;
+    if (!product) throw new Error("Product is missing");
+    const userId = req.user._id;
+    let user = await User.findOne({ _id: userId });
+    user.cart.delete(product);
+    await user.save();
+    res.status(200).send({ cart: user.cart });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+UserRouter.get("/getCartItems", auth, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    let user = await User.findOne({ _id: userId });
+    let cartItems = user.cart;
+    const cart = [];
+    for (const [key, value] of cartItems) {
+      const product = await Product.findOne({ _id: key });
+      cart.push({
+        _id: product._id,
+        name: product.name,
+        description: product.description,
+        image: product.images[0],
+        amount: product.amount,
+        quantity: value.quantity,
+      });
+    }
+    res.status(200).send({ cart });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
 module.exports = UserRouter;

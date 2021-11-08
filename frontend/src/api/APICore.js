@@ -9,7 +9,7 @@ export const APICore = async (endpoint, method, token, body) => {
   };
   let response;
   if (method === "post") response = await axios.post(endpoint, body, config);
-  else if (method === "get") response = await axios.get(endpoint);
+  else if (method === "get") response = await axios.get(endpoint, config);
   return response.data;
 };
 

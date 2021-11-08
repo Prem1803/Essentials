@@ -1,30 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const OrderDetails = () => {
+const OrderDetails = ({ cartItems, updateTotal }) => {
+  const [total, setTotal] = useState(0);
+  const [tax, setTax] = useState(0);
+  const updateSum = () => {
+    let sum = 0;
+    for (const item of cartItems) {
+      sum = sum + item.amount * item.quantity;
+    }
+    setTotal(sum);
+  };
+  useEffect(() => {
+    updateSum();
+  }, [cartItems]);
+  useEffect(() => {
+    console.log(cartItems);
+    updateSum();
+  }, [updateTotal]);
+  useEffect(() => {
+    setTax(total * 0.15);
+  }, [total]);
   return (
     <div className="cart-detail">
       <div className="row">
         <div className="pl-xl-5 col-lg-8 col-md-8 col-sm-12">
-          <div className="form-group">
-            <label htmlFor="input-promocode">Have a promocode</label>
-
-            <div className="input-group">
-              <input
-                type="text"
-                name="promocode"
-                className="form-control"
-                placeholder="Enter your promocode"
-              />
-
-              <div className="input-group-append">
-                <button className="btn" id="button-apply" type="button">
-                  Apply
-                </button>
-              </div>
-            </div>
-          </div>
-
           <div className="form-group">
             <label>Enter a Note for Delivery Store/Person</label>
 
@@ -43,19 +43,19 @@ const OrderDetails = () => {
         </div>
 
         <div className="col-xl-3 col-lg-4 col-md-4 col-sm-12 ml-auto">
-          <h2>Order summery</h2>
+          <h2>Order summary</h2>
 
           <p>
             Sub Total{" "}
             <span>
-              <i className="fas fa-rupee-sign"></i> 210.00
+              <i className="fas fa-rupee-sign"></i> {total}
             </span>
           </p>
 
           <p>
             Tax{" "}
             <span>
-              <i className="fas fa-rupee-sign"></i> 40.00
+              <i className="fas fa-rupee-sign"></i> {tax}
             </span>
           </p>
 
@@ -64,13 +64,13 @@ const OrderDetails = () => {
           <p className="font-medium">
             Total Price{" "}
             <span>
-              <i className="fas fa-rupee-sign"></i> 250.00
+              <i className="fas fa-rupee-sign"></i> {total + tax}
             </span>
           </p>
 
           <div className="buttons">
-            <Link className="btn btn-block btn-orange" to="/checkout">
-              Proceed to checkout
+            <Link className="btn btn-block btn-orange" to="/profile">
+              Place Order
             </Link>
           </div>
 

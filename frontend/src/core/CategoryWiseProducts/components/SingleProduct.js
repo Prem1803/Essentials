@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addToCart } from "../../../actions/CartActions";
 import { FetchImage } from "../../../api/APICore";
 import CoverLoader from "../../Components/CoverLoader";
 
 const SingleProduct = ({ product }) => {
+  const dispatch = useDispatch();
   const [stars, setStars] = useState([]);
   const [emptyStars, setEmptyStars] = useState([0, 1, 2, 3, 4]);
   const [ImageData, setImageData] = useState("");
@@ -34,7 +37,12 @@ const SingleProduct = ({ product }) => {
       }
     }
   }, [product]);
-
+  const addProductToCart = () => {
+    if (product) {
+      let products = [{ _id: product._id, quantity: 1 }];
+      dispatch(addToCart({ products }));
+    }
+  };
   return (
     <div className="product-layout product-grid col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div className="product-holder product-thumb">
@@ -81,7 +89,12 @@ const SingleProduct = ({ product }) => {
             </span>
           </div>
           <div className="p-buttonarea">
-            <button className="btn btn-pcart">
+            <button
+              className="btn btn-pcart"
+              onClick={() => {
+                addProductToCart();
+              }}
+            >
               Add To Cart <i className="far fa-shopping-cart"></i>
             </button>
             <span className="pull-right">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { getCartItems } from "../../actions/CartActions";
 import { getAllCategories } from "../../actions/CategoryActions";
 import store from "../../store";
 const Navbar = ({ level }) => {
@@ -45,7 +46,33 @@ const Navbar = ({ level }) => {
   });
   useEffect(() => {
     setCategories(category.categories);
-    if (categories.length === 0) dispatch(getAllCategories());
+    if (category.categories && category.categories.length === 0)
+      dispatch(getAllCategories());
+  }, []);
+  let cart = store.getState().cart;
+  const [cartAmount, setCartAmount] = useState(0);
+  store.subscribe(() => {
+    cart = store.getState().cart;
+    if (cart.cartItems) {
+      const cartItems = cart.cartItems;
+      let amount = 0;
+      for (const item of cartItems) {
+        amount = amount + item.amount * item.quantity;
+      }
+      setCartAmount(amount);
+    }
+  });
+
+  useEffect(() => {
+    if (cart.cartItems && cart.cartItems.length === 0) dispatch(getCartItems());
+    else if (cart.cartItems) {
+      const cartItems = cart.cartItems;
+      let amount = 0;
+      for (const item of cartItems) {
+        amount = amount + item.amount * item.quantity;
+      }
+      setCartAmount(amount);
+    }
   }, []);
   return (
     <>
@@ -105,7 +132,7 @@ const Navbar = ({ level }) => {
                       >
                         <i className="fas fa-shopping-cart"></i>{" "}
                         <span className="amount">
-                          <i className="fas fa-rupee-sign"></i> 250.00
+                          <i className="fas fa-rupee-sign"></i> {cartAmount}
                         </span>
                       </Link>
                     </li>
@@ -354,7 +381,7 @@ const Navbar = ({ level }) => {
                           >
                             <i className="fas fa-shopping-cart"></i>{" "}
                             <span className="amount">
-                              <i className="fas fa-rupee-sign"></i> 250.00
+                              <i className="fas fa-rupee-sign"></i> {cartAmount}
                             </span>
                           </Link>
                         </li>

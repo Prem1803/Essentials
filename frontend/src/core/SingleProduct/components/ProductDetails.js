@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../actions/CartActions";
 import { FetchImage } from "../../../api/APICore";
 import CoverLoader from "../../Components/CoverLoader";
 
 const ProductDetails = ({ product }) => {
+  const dispatch = useDispatch();
   const [images, setImages] = useState([]);
   const [stars, setStars] = useState([]);
   const [emptyStars, setEmptyStars] = useState([0, 1, 2, 3, 4]);
@@ -36,6 +39,12 @@ const ProductDetails = ({ product }) => {
   useEffect(() => {
     console.log(images);
   }, [images]);
+  const addProductToCart = () => {
+    if (product) {
+      let products = [{ _id: product._id, quantity }];
+      dispatch(addToCart({ products }));
+    }
+  };
   return (
     <div className="row">
       <div className="col-md-4">
@@ -173,7 +182,7 @@ const ProductDetails = ({ product }) => {
           <div className="row">
             <div className="col-lg-6 col-md-12 col-sm-12 my-auto">
               <div className="btn-area">
-                <button className="btn btn-pcart">
+                <button className="btn btn-pcart" onClick={addProductToCart}>
                   {" "}
                   Add To Cart <i className="far fa-shopping-cart"></i>
                 </button>

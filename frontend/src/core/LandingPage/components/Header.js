@@ -5,6 +5,7 @@ import Slider from "./Slider";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/UserActions";
 import { getAllCategories } from "../../../actions/CategoryActions";
+import { getCartItems } from "../../../actions/CartActions";
 const Header = () => {
   const [slider, setSlider] = useState(2);
   const [showCategories, setShowCategories] = useState(false);
@@ -52,7 +53,21 @@ const Header = () => {
   });
   useEffect(() => {
     setCategories(category.categories);
-    if (categories.length === 0) dispatch(getAllCategories());
+    if (category.categories && category.categories.length === 0)
+      dispatch(getAllCategories());
+  }, []);
+  let cart = store.getState().cart;
+  const [cartQuantity, setCartQuantity] = useState(0);
+  store.subscribe(() => {
+    cart = store.getState().cart;
+    if (cart.cartItems) {
+      const cartItems = cart.cartItems;
+
+      setCartQuantity(cartItems.length);
+    }
+  });
+  useEffect(() => {
+    if (cart.cartItems && cart.cartItems.length === 0) dispatch(getCartItems());
   }, []);
 
   return (
@@ -141,7 +156,7 @@ const Header = () => {
                       title="Cart"
                     >
                       <i className="fas fa-shopping-cart"></i>
-                      <span className="notibubble">3</span>
+                      <span className="notibubble">{cartQuantity}</span>
                     </Link>
                   </li>
                 </ul>
@@ -263,7 +278,7 @@ const Header = () => {
 
         <div className="mega-menudesktop">
           <div className="navpart d-none d-lg-block d-xl-block">
-            <nav className="navbar navbar-expand-lg navbar-light py-3">
+            <nav className="navbar navbar-expand-lg navbar-light py-{cartQuantity}">
               <div className="container-fluid">
                 <button
                   className="navbar-toggler"

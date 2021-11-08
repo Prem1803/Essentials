@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getCartItems } from "../../actions/CartActions";
+import store from "../../store";
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
 import CartItems from "./components/CartItems";
 import OrderDetails from "./components/OrderDetails";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [updateTotal, setUpdateTotal] = useState(true);
+  let cart = store.getState().cart;
+  store.subscribe(() => {
+    cart = store.getState().cart;
+    if (cart.cartItems) {
+      setCartItems(cart.cartItems);
+    }
+    if (cart.loading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  });
+
+  useEffect(() => {
+    dispatch(getCartItems());
+  }, []);
+  const UpdateTotal = () => {
+    setUpdateTotal(!updateTotal);
+  };
+  useEffect(() => {
+    console.log(updateTotal);
+  }, [updateTotal]);
+
   return (
     <div className="essential-cart">
       <Navbar />
@@ -20,8 +50,12 @@ const Cart = () => {
                 </div>
               </div>
             </div>
-            <CartItems />
-            <OrderDetails />
+            <CartItems
+              cartItems={cartItems}
+              loading={loading}
+              UpdateTotal={UpdateTotal}
+            />
+            <OrderDetails cartItems={cartItems} updateTotal={updateTotal} />
           </div>
         </div>
       </div>

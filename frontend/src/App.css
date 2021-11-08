@@ -1885,6 +1885,10 @@ li.footer-pay-logo {
   height: 200px;
   width: 100%;
 }
+.cart-product-img-fluid {
+  height: auto;
+  width: 100%;
+}
 .btn-pcart {
   color: #fff !important;
   background: #f55d2c;
@@ -4467,10 +4471,13 @@ a.read-moreblog:hover {
 }
 
 .contact-left .group-img img {
-  width: 100%;
-  max-width: 250px;
-  margin-left: 2rem;
+  width: 250px;
+  height: 250px;
   box-shadow: 3px 2px 8px 0 #9e9e9e;
+  position: relative;
+  left: 10%;
+  margin: 10px;
+  border-radius: 50%;
 }
 
 .about-service .working-content {
@@ -4885,8 +4892,8 @@ a.read-moreblog:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 121px;
-  min-height: 107px;
+  width: 250px;
+  height: auto;
   margin-right: 25px;
 }
 
@@ -6456,11 +6463,6 @@ select:focus-visible {
     font-size: 18px;
   }
 
-  .cart-section .img-product {
-    min-width: 100px;
-    min-height: 80px;
-  }
-
   .cart-detail .input-group {
     width: 80%;
   }
@@ -7645,11 +7647,6 @@ select:focus-visible {
 
   .profile_settingright .ui.form .field label {
     bottom: 10px;
-  }
-
-  .cart-section .img-product {
-    min-width: 60px;
-    min-height: 60px;
   }
 
   .essential-top-header {

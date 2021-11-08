@@ -2,6 +2,18 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { getTrimmedMobileNumber } = require("../utils/helperFunction");
+
+const cartSchema = new mongoose.Schema(
+  {
+    quantity: {
+      type: Number,
+      required: true,
+    },
+  },
+  {
+    timeStamps: true,
+  }
+);
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -56,6 +68,10 @@ const userSchema = new mongoose.Schema({
       type: String,
       trim: true,
     },
+  },
+  cart: {
+    type: Map,
+    of: cartSchema,
   },
 });
 

@@ -18,7 +18,8 @@ const ListCategories = () => {
   });
   useEffect(() => {
     setCategories(category.categories);
-    if (categories.length === 0) dispatch(getAllCategories());
+    if (category.categories && category.categories.length === 0)
+      dispatch(getAllCategories());
   }, []);
   return (
     <div className="row">

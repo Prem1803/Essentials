@@ -1,7 +1,8 @@
 import React from "react";
+import CoverLoader from "../../Components/CoverLoader";
 import SingleCartItem from "./SingleCartItem";
 
-const cartItems = () => {
+const cartItems = ({ cartItems, loading, UpdateTotal }) => {
   return (
     <div className="table-responsive">
       <table className="table table-borderless">
@@ -17,11 +18,22 @@ const cartItems = () => {
           </tr>
         </thead>
 
-        <tbody>
-          <SingleCartItem />
-          <SingleCartItem />
-          <SingleCartItem />
-        </tbody>
+        {loading ? (
+          <CoverLoader />
+        ) : (
+          <tbody>
+            {cartItems &&
+              cartItems.map((item, index) => {
+                return (
+                  <SingleCartItem
+                    key={index}
+                    cartItem={item}
+                    UpdateTotal={UpdateTotal}
+                  />
+                );
+              })}
+          </tbody>
+        )}
       </table>
     </div>
   );
