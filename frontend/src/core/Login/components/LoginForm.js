@@ -26,7 +26,7 @@ const LoginForm = () => {
       setLoading(false);
     }
     if (userLogin.token) {
-      navigate("/");
+      navigate("/login");
     }
   });
   return (

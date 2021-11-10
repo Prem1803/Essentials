@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getCartItems } from "../../actions/CartActions";
 import { getAllCategories } from "../../actions/CategoryActions";
+import { getWishlistItems } from "../../actions/WishlistActions";
 import store from "../../store";
 const Navbar = ({ level }) => {
   const [showCategories, setShowCategories] = useState(false);
@@ -37,9 +38,10 @@ const Navbar = ({ level }) => {
   const [categories, setCategories] = useState([]);
 
   let category = store.getState().category;
+  let wishlist = store.getState().wishlist;
   store.subscribe(() => {
     category = store.getState().category;
-
+    wishlist = store.getState().wishlist;
     if (category.categories) {
       setCategories(category.categories);
     }
@@ -48,6 +50,8 @@ const Navbar = ({ level }) => {
     setCategories(category.categories);
     if (category.categories && category.categories.length === 0)
       dispatch(getAllCategories());
+    if (wishlist.wishlistItems && wishlist.wishlistItems.length === 0)
+      dispatch(getWishlistItems());
   }, []);
   let cart = store.getState().cart;
   const [cartAmount, setCartAmount] = useState(0);

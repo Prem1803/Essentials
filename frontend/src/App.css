@@ -3194,14 +3194,14 @@ a.read-moreblog:hover {
   color: #45b144;
 }
 
-.latest-product .product-holder .p-buttonarea a.btn-wish,
-.popular-product .product-holder .p-buttonarea a.btn-wish {
+.latest-product .product-holder .p-buttonarea button.btn-wish,
+.popular-product .product-holder .p-buttonarea button.btn-wish {
   color: #45b144 !important;
   border: 2px solid #45b144;
   margin: 0 5px;
 }
 
-#category-filter .product-holder .p-buttonarea a.btn-wish {
+#category-filter .product-holder .p-buttonarea button.btn-wish {
   color: #45b144 !important;
   border: 2px solid #45b144;
   margin: 0 2px;
@@ -3214,9 +3214,9 @@ a.read-moreblog:hover {
   padding: 2px 1px;
 }
 
-.latest-product .product-holder .p-buttonarea a.btn-wish:hover,
-.popular-product .product-holder .p-buttonarea a.btn-wish:hover,
-#category-filter .product-holder .p-buttonarea a.btn-wish:hover {
+.latest-product .product-holder .p-buttonarea button.btn-wish:hover,
+.popular-product .product-holder .p-buttonarea button.btn-wish:hover,
+#category-filter .product-holder .p-buttonarea button.btn-wish:hover {
   background: #45b144;
   color: #fff !important;
 }
@@ -5889,14 +5889,9 @@ select:focus-visible {
   position: relative;
 }
 
-.order-setting .order-img .btn.btn-del {
-  border: 1px solid #9e9e9e;
-}
-
 .order-setting .order-img .btn.btn-del:hover,
 .order-heading:hover .btn-left {
   color: #fff;
-  border: 1px solid #f55d2c;
   background: #f55d2c;
 }
 
@@ -7538,8 +7533,8 @@ select:focus-visible {
     padding: 6px 10px;
   }
 
-  .latest-product .product-holder .p-buttonarea a.btn-wish,
-  .popular-product .product-holder .p-buttonarea a.btn-wish {
+  .latest-product .product-holder .p-buttonarea button.btn-wish,
+  .popular-product .product-holder .p-buttonarea button.btn-wish {
     margin: 0 2px;
   }
 
@@ -8156,8 +8151,8 @@ select:focus-visible {
     top: 20% !important;
   }
 
-  .latest-product .product-holder .p-buttonarea a.btn-wish,
-  .popular-product .product-holder .p-buttonarea a.btn-wish {
+  .latest-product .product-holder .p-buttonarea button.btn-wish,
+  .popular-product .product-holder .p-buttonarea button.btn-wish {
     margin: 0;
   }
 

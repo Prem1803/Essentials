@@ -1,5 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import Home from "./core/LandingPage/Home";
 import AboutUs from "./core/AboutUs/AboutUs";
@@ -12,8 +17,16 @@ import AllCategories from "./core/AllCategories/AllCategories";
 import CategoryWiseProducts from "./core/CategoryWiseProducts/CategoryWiseProducts";
 import SearchWiseProducts from "./core/CategoryWiseProducts/SearchWiseProducts";
 import SingleProduct from "./core/SingleProduct/SingleProduct";
+import store from "./store";
 
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    let userLogin = store.getState().userLogin;
+    if (userLogin.token) {
+      setLoggedIn(true);
+    }
+  }, []);
   return (
     <Router>
       <Routes>
@@ -40,8 +53,11 @@ const App = () => {
           element={<SingleProduct />}
         ></Route>
 
-        <Route exact path="/profile" element={<UserProfile />}></Route>
-
+        <Route
+          exact
+          path="/profile"
+          element={loggedIn ? <UserProfile /> : <Navigate to="/login" />}
+        ></Route>
         {/* To Do
         /register-seller
         */}

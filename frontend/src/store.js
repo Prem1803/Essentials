@@ -14,6 +14,11 @@ import {
   removeFromCartReducer,
   cartListReducer,
 } from "./reducers/cartReducers";
+import {
+  addToWishlistReducer,
+  removeFromWishlistReducer,
+  wishListReducer,
+} from "./reducers/wishlistReducers";
 import { categoryReducer } from "./reducers/categoryReducers";
 
 const reducer = combineReducers({
@@ -27,6 +32,9 @@ const reducer = combineReducers({
   addToCart: addToCartReducer,
   removeFromCart: removeFromCartReducer,
   cart: cartListReducer,
+  addToWishlist: addToWishlistReducer,
+  removeFromWishlist: removeFromWishlistReducer,
+  wishlist: wishListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("essentialUser")

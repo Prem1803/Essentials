@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../actions/CartActions";
 import { FetchImage } from "../../../api/APICore";
+import store from "../../../store";
 import CoverLoader from "../../Components/CoverLoader";
 
 const ProductDetails = ({ product }) => {
@@ -45,6 +46,27 @@ const ProductDetails = ({ product }) => {
       dispatch(addToCart({ products }));
     }
   };
+  let wishlist = store.getState().wishlist;
+  const [inWishList, setInWishList] = useState(false);
+  store.subscribe(() => {
+    wishlist = store.getState().wishlist;
+    if (wishlist.wishlistItems) {
+      for (const item of wishlist.wishlistItems) {
+        if (product._id === item._id) {
+          setInWishList(true);
+        }
+      }
+    }
+  });
+  useEffect(() => {
+    if (wishlist.wishlistItems) {
+      for (const item of wishlist.wishlistItems) {
+        if (product._id === item._id) {
+          setInWishList(true);
+        }
+      }
+    }
+  }, []);
   return (
     <div className="row">
       <div className="col-md-4">
@@ -189,7 +211,9 @@ const ProductDetails = ({ product }) => {
 
                 <span className="pull-right">
                   <div className="btn-wish">
-                    <i className="far fa-heart"> </i>{" "}
+                    <i className={inWishList ? "fas fa-heart" : "far fa-heart"}>
+                      {" "}
+                    </i>{" "}
                   </div>{" "}
                 </span>
               </div>

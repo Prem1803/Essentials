@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart } from "../../../actions/CartActions";
+import { addToWishlist } from "../../../actions/WishlistActions";
 import { FetchImage } from "../../../api/APICore";
+import store from "../../../store";
 import CoverLoader from "../../Components/CoverLoader";
 
 const SingleProduct = ({ product }) => {
@@ -43,6 +45,32 @@ const SingleProduct = ({ product }) => {
       dispatch(addToCart({ products }));
     }
   };
+  const addToWishList = () => {
+    if (product) {
+      dispatch(addToWishlist({ product: product._id }));
+    }
+  };
+  let wishlist = store.getState().wishlist;
+  const [inWishList, setInWishList] = useState(false);
+  store.subscribe(() => {
+    wishlist = store.getState().wishlist;
+    if (wishlist.wishlistItems) {
+      for (const item of wishlist.wishlistItems) {
+        if (product._id === item._id) {
+          setInWishList(true);
+        }
+      }
+    }
+  });
+  useEffect(() => {
+    if (wishlist.wishlistItems) {
+      for (const item of wishlist.wishlistItems) {
+        if (product._id === item._id) {
+          setInWishList(true);
+        }
+      }
+    }
+  }, []);
   return (
     <div className="product-layout product-grid col-12 col-xl-3 col-lg-6 col-md-6 col-sm-6">
       <div className="product-holder product-thumb">
@@ -98,12 +126,19 @@ const SingleProduct = ({ product }) => {
               Add To Cart <i className="far fa-shopping-cart"></i>
             </button>
             <span className="pull-right">
-              <button className="btn btn-wish">
-                <i className="far fa-heart"> </i>{" "}
+              <button
+                className="btn btn-wish"
+                onClick={() => {
+                  addToWishList();
+                }}
+              >
+                <i className={inWishList ? "fas fa-heart" : "far fa-heart"}>
+                  {" "}
+                </i>{" "}
               </button>{" "}
               <button className="btn btn-wish">
                 <Link to={product ? `/product/${product._id}` : ""}>
-                  <i className="fas fa-eye"></i>
+                  <i className="far fa-eye"></i>
                 </Link>
               </button>
             </span>

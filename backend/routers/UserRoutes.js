@@ -124,4 +124,52 @@ UserRouter.get("/getCartItems", auth, async (req, res) => {
     res.status(400).send({ error: error.message });
   }
 });
+
+UserRouter.post("/addToWishlist", auth, async (req, res) => {
+  try {
+    let { product } = req.body;
+    const userId = req.user._id;
+    let user = await User.findOne({ _id: userId });
+    if (product) {
+      user.wishlist.set(product.toString(), { date: new Date("2021-11-10") });
+    }
+    await user.save();
+    res.status(200).send({ wishlist: user.wishlist });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+UserRouter.post("/removeFromWishlist", auth, async (req, res) => {
+  try {
+    let { product } = req.body;
+    const userId = req.user._id;
+    let user = await User.findOne({ _id: userId });
+    if (product) user.wishlist.delete(product);
+    await user.save();
+    res.status(200).send({ wishlist: user.wishlist });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+UserRouter.get("/getWishlist", auth, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    let user = await User.findOne({ _id: userId });
+    let wishlistItems = user.wishlist;
+    const wishlist = [];
+    for (const [key, value] of wishlistItems) {
+      const product = await Product.findOne({ _id: key });
+      wishlist.push({
+        _id: product._id,
+        name: product.name,
+        description: product.description,
+        image: product.images[0],
+        amount: product.amount,
+      });
+    }
+    res.status(200).send({ wishlist });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
 module.exports = UserRouter;

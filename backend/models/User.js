@@ -14,6 +14,11 @@ const cartSchema = new mongoose.Schema(
     timeStamps: true,
   }
 );
+const wishListSchema = new mongoose.Schema({
+  date: {
+    type: Date,
+  },
+});
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -72,6 +77,10 @@ const userSchema = new mongoose.Schema({
   cart: {
     type: Map,
     of: cartSchema,
+  },
+  wishlist: {
+    type: Map,
+    of: wishListSchema,
   },
 });
 

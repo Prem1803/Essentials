@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/UserActions";
 import { getAllCategories } from "../../../actions/CategoryActions";
 import { getCartItems } from "../../../actions/CartActions";
+import { getWishlistItems } from "../../../actions/WishlistActions";
 const Header = () => {
   const [slider, setSlider] = useState(2);
   const [showCategories, setShowCategories] = useState(false);
@@ -57,9 +58,11 @@ const Header = () => {
       dispatch(getAllCategories());
   }, []);
   let cart = store.getState().cart;
+  let wishlist = store.getState().wishlist;
   const [cartQuantity, setCartQuantity] = useState(0);
   store.subscribe(() => {
     cart = store.getState().cart;
+    wishlist = store.getState().wishlist;
     if (cart.cartItems) {
       const cartItems = cart.cartItems;
 
@@ -68,6 +71,8 @@ const Header = () => {
   });
   useEffect(() => {
     if (cart.cartItems && cart.cartItems.length === 0) dispatch(getCartItems());
+    if (wishlist.wishlistItems && wishlist.wishlistItems.length === 0)
+      dispatch(getWishlistItems());
   }, []);
 
   return (

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart } from "../../../actions/CartActions";
+import { addToWishlist } from "../../../actions/WishlistActions";
 import { FetchImage } from "../../../api/APICore";
+import store from "../../../store";
 import CoverLoader from "../../Components/CoverLoader";
 
 const SingleItem = ({ product }) => {
@@ -46,6 +48,32 @@ const SingleItem = ({ product }) => {
       dispatch(addToCart({ products }));
     }
   };
+  const addToWishList = () => {
+    if (product) {
+      dispatch(addToWishlist({ product: product._id }));
+    }
+  };
+  let wishlist = store.getState().wishlist;
+  const [inWishList, setInWishList] = useState(false);
+  store.subscribe(() => {
+    wishlist = store.getState().wishlist;
+    if (wishlist.wishlistItems) {
+      for (const item of wishlist.wishlistItems) {
+        if (product._id === item._id) {
+          setInWishList(true);
+        }
+      }
+    }
+  });
+  useEffect(() => {
+    if (wishlist.wishlistItems) {
+      for (const item of wishlist.wishlistItems) {
+        if (product._id === item._id) {
+          setInWishList(true);
+        }
+      }
+    }
+  }, []);
   return (
     <div className="item ">
       <div className="product-holder">
@@ -104,8 +132,15 @@ const SingleItem = ({ product }) => {
               Add To Cart <i className="far fa-shopping-cart"></i>
             </div>
             <span className="pull-right">
-              <div className="btn-wish">
-                <i className="far fa-heart"> </i>{" "}
+              <div
+                className="btn-wish"
+                onClick={() => {
+                  addToWishList();
+                }}
+              >
+                <i className={inWishList ? "fas fa-heart" : "far fa-heart"}>
+                  {" "}
+                </i>{" "}
               </div>{" "}
               <div className="btn-wish">
                 <Link to={product ? `/product/${product._id}` : ""}>
