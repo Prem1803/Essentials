@@ -39,9 +39,7 @@ const SingleItem = ({ product }) => {
       }
     }
   }, [product]);
-  useEffect(() => {
-    console.log(ImageData);
-  }, [ImageData]);
+
   const addProductToCart = () => {
     if (product) {
       let products = [{ _id: product._id, quantity: 1 }];

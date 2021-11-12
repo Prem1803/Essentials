@@ -14,11 +14,15 @@ const SingleProduct = () => {
   const [productDetails, setProductDetails] = useState({});
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [reviews, setReviews] = useState([]);
   let product = store.getState().product;
   store.subscribe(() => {
     product = store.getState().product;
     if (product.product) {
       setProductDetails(product.product);
+      if (product.product.reviews) {
+        setReviews(product.product.reviews);
+      }
     }
 
     if (product.loading) {
@@ -40,7 +44,7 @@ const SingleProduct = () => {
           ) : (
             <ProductDetails product={productDetails} />
           )}
-          {!loading && <ProductReviews />}
+          {!loading && <ProductReviews reviews={reviews} />}
         </div>
       </div>
       <Footer level={1} />

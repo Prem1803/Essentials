@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { placeOrder } from "../../../actions/OrderActions";
 
 const OrderDetails = ({ cartItems, updateTotal }) => {
   const [total, setTotal] = useState(0);
@@ -15,12 +17,16 @@ const OrderDetails = ({ cartItems, updateTotal }) => {
     updateSum();
   }, [cartItems]);
   useEffect(() => {
-    console.log(cartItems);
     updateSum();
   }, [updateTotal]);
   useEffect(() => {
     setTax(total * 0.15);
   }, [total]);
+  const dispatch = useDispatch();
+  const [note, setNote] = useState("");
+  const placeTheOrder = () => {
+    dispatch(placeOrder({ note }));
+  };
   return (
     <div className="cart-detail">
       <div className="row">
@@ -32,6 +38,8 @@ const OrderDetails = ({ cartItems, updateTotal }) => {
               rows="3"
               className="form-control"
               placeholder="Your Note here"
+              onChange={(e) => setNote(e.target.value)}
+              value={note}
             ></textarea>
           </div>
 
@@ -69,7 +77,11 @@ const OrderDetails = ({ cartItems, updateTotal }) => {
           </p>
 
           <div className="buttons">
-            <Link className="btn btn-block btn-orange" to="/profile">
+            <Link
+              className="btn btn-block btn-orange"
+              to="/profile"
+              onClick={placeTheOrder}
+            >
               Place Order
             </Link>
           </div>

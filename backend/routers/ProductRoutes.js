@@ -94,6 +94,12 @@ ProductRouter.post("/product/single", async (req, res) => {
     if (!productId) throw new Error("Product not found.");
     const product = await Product.findOne({
       _id: productId,
+    }).populate({
+      path: "reviews",
+      populate: {
+        path: "user",
+        select: { firstName: 1, lastName: 1, profile: 1 },
+      },
     });
 
     res.status(200).send({ product });

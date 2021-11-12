@@ -19,70 +19,75 @@ const wishListSchema = new mongoose.Schema({
     type: Date,
   },
 });
-const userSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  lastName: {
-    type: String,
-    trim: true,
-  },
-  profile: {
-    type: String,
-    trim: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  mobileNumber: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  gender: {
-    type: String,
-    enum: ["Male", "Female"],
-  },
-  alternateMobileNumber: {
-    type: String,
-    trim: true,
-  },
-  address: {
-    houseNumber: {
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
       type: String,
       trim: true,
     },
-    area: {
+    profile: {
       type: String,
       trim: true,
     },
-    city: {
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    mobileNumber: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female"],
+    },
+    alternateMobileNumber: {
       type: String,
       trim: true,
     },
-    state: {
-      type: String,
-      trim: true,
+    address: {
+      houseNumber: {
+        type: String,
+        trim: true,
+      },
+      area: {
+        type: String,
+        trim: true,
+      },
+      city: {
+        type: String,
+        trim: true,
+      },
+      state: {
+        type: String,
+        trim: true,
+      },
+    },
+    cart: {
+      type: Map,
+      of: cartSchema,
+    },
+    wishlist: {
+      type: Map,
+      of: wishListSchema,
     },
   },
-  cart: {
-    type: Map,
-    of: cartSchema,
-  },
-  wishlist: {
-    type: Map,
-    of: wishListSchema,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.methods.toJSON = function () {
   const user = this;

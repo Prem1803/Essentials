@@ -114,7 +114,6 @@ export const addToCart = (requestBody) => async (dispatch, getState) => {
         payload: cartdata.cart,
       });
     } else {
-      console.log(requestBody);
       data = await addItemInLocalCart(requestBody);
 
       dispatch({

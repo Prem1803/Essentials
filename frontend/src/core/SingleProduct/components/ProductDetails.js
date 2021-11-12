@@ -37,9 +37,7 @@ const ProductDetails = ({ product }) => {
       }
     }
   }, [product]);
-  useEffect(() => {
-    console.log(images);
-  }, [images]);
+
   const addProductToCart = () => {
     if (product) {
       let products = [{ _id: product._id, quantity }];

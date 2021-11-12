@@ -31,9 +31,6 @@ const Cart = () => {
   const UpdateTotal = () => {
     setUpdateTotal(!updateTotal);
   };
-  useEffect(() => {
-    console.log(updateTotal);
-  }, [updateTotal]);
 
   return (
     <div className="essential-cart">

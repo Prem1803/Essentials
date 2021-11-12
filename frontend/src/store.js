@@ -2,7 +2,13 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { userLoginReducer, userRegisterReducer } from "./reducers/userReducers";
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  userDetailsReducer,
+  updateUserDetailsReducer,
+  userImageReducer,
+} from "./reducers/userReducers";
 import {
   recentProductsReducer,
   popularProductsReducer,
@@ -15,6 +21,11 @@ import {
   cartListReducer,
 } from "./reducers/cartReducers";
 import {
+  placeOrderReducer,
+  orderListReducer,
+  orderCreateReviewReducer,
+} from "./reducers/orderReducers";
+import {
   addToWishlistReducer,
   removeFromWishlistReducer,
   wishListReducer,
@@ -24,6 +35,8 @@ import { categoryReducer } from "./reducers/categoryReducers";
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  user: userDetailsReducer,
+  updateUser: updateUserDetailsReducer,
   recentProducts: recentProductsReducer,
   popularProducts: popularProductsReducer,
   category: categoryReducer,
@@ -35,6 +48,10 @@ const reducer = combineReducers({
   addToWishlist: addToWishlistReducer,
   removeFromWishlist: removeFromWishlistReducer,
   wishlist: wishListReducer,
+  placeOrder: placeOrderReducer,
+  orderList: orderListReducer,
+  orderReview: orderCreateReviewReducer,
+  userImage: userImageReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("essentialUser")

@@ -1,30 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { FetchImage } from "../../../api/APICore";
+import CoverLoader from "../../Components/CoverLoader";
 
-const SingleReview = () => {
+const SingleReview = ({ review }) => {
+  const [stars, setStars] = useState([]);
+  const [emptyStars, setEmptyStars] = useState([0, 1, 2, 3, 4]);
+  const [ImageData, setImageData] = useState("");
+  const [fetchingImage, setFetchingImage] = useState(false);
+
+  useEffect(() => {
+    let rating = review.rating;
+    let starsArray = [];
+    let emptystarsArray = [];
+    for (var i = 0; i < rating; i++) starsArray.push(i);
+    for (i = 5; i > rating; i--) {
+      emptystarsArray.push(i);
+    }
+    setStars(starsArray);
+    setEmptyStars(emptystarsArray);
+  }, []);
+  useEffect(() => {
+    const SetTheFetchedImage = async () => {
+      setFetchingImage(true);
+      if (review.user.profile) var data = await FetchImage(review.user.profile);
+      setImageData(data);
+
+      setFetchingImage(false);
+    };
+    SetTheFetchedImage();
+  }, []);
   return (
     <div className="media">
       <div className="media-left">
-        <img src="../img/about/prem.jpeg" alt="img" />
+        {fetchingImage ? (
+          <CoverLoader image={true} />
+        ) : (
+          <img
+            src={ImageData !== "" ? URL.createObjectURL(ImageData) : ""}
+            // className="product-img-fluid"
+            alt="img"
+          />
+        )}
       </div>
 
       <div className="media-body">
-        <p>
-          It is a Pure Fresh Milk. It's really thick and it's very creamy and
-          within a week I'm able to extract 250gm of pure ghee. It's really
-          amazing and the delivery is also very quick I usually receives within
-          10-20 minutes.
-        </p>
+        <p>{review && review.review}</p>
 
         <ul className="list-inline rating">
           <li className="list-inline-item">
-            Prem Kumar -<i className="fa fa-star" aria-hidden="true"></i>
-            <i className="fa fa-star" aria-hidden="true"></i>
-            <i className="fa fa-star" aria-hidden="true"></i>
-            <i className="fa fa-star" aria-hidden="true"></i>
-            <i className="fa fa-star" aria-hidden="true"></i>
+            {review.user.firstName} {review.user.lastName} -
+            {stars.map((index) => {
+              return <i className="fas fa-star" key={index}></i>;
+            })}
+            {emptyStars.map((index) => {
+              return <i className="far fa-star" key={index}></i>;
+            })}
           </li>
 
-          <li className="list-inline-item date">October 28, 2021</li>
+          <li className="list-inline-item date">
+            {new Date(review.createdAt).toDateString()}
+          </li>
         </ul>
       </div>
     </div>

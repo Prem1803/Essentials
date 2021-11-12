@@ -5665,7 +5665,7 @@ a.read-moreblog:hover {
 .profile_settingright .ui.form select,
 .profile_settingright .ui.form textarea {
   border: 1px solid #9e9e9e !important;
-  color: #9e9e9e !important;
+  color: #f46432 !important;
   border-radius: 0 !important;
   height: 40px;
   margin-bottom: 20px !important;
@@ -5703,7 +5703,7 @@ a.read-moreblog:hover {
 }
 
 .profile_settingright .ui.form .field label {
-  color: #b9b9b9;
+  color: #f46432;
   font-weight: 400;
   position: absolute;
   right: 20px;
@@ -6109,8 +6109,11 @@ select:focus-visible {
   margin-right: 15px;
 }
 .list-inline .list-inline-item i {
-  font-size: 32px;
-  margin: 2rem;
+  font-size: 18px;
+  margin: 1rem;
+}
+.list-inline .list-inline-item i.fas {
+  color: #f46432;
 }
 
 .detail_right .qty_weight input {

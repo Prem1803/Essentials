@@ -1,7 +1,7 @@
 import React from "react";
 import SingleReview from "./SingleReview";
 
-const ProductReviews = () => {
+const ProductReviews = ({ reviews }) => {
   return (
     <div className="detail_mid">
       <hr />
@@ -10,8 +10,9 @@ const ProductReviews = () => {
           <div className="tab-content">
             <div className="tab-pane active" id="reviews" role="tabpanel">
               <h2>Reviews</h2>
-
-              <SingleReview />
+              {reviews.map((review, index) => {
+                return <SingleReview review={review} key={index} />;
+              })}
             </div>
           </div>
         </div>

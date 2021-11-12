@@ -1,4 +1,4 @@
-import { APICore } from "../api/APICore";
+import { APICore, FormDataAPI } from "../api/APICore";
 
 import {
   USER_LOGIN_FAIL,
@@ -8,6 +8,13 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_IMAGE_UPDATE_REQUEST,
 } from "../constants/userConstants";
 import {
   ADD_TO_CART_REQUEST,
@@ -88,6 +95,75 @@ export const logout = () => async (dispatch) => {
     dispatch({
       type: USER_LOGOUT,
       payload: null,
+    });
+  } catch (e) {}
+};
+
+export const getUserDetails = () => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { token },
+    } = getState();
+    dispatch({
+      type: USER_DETAILS_REQUEST,
+    });
+
+    if (token) {
+      const data = await APICore("/user", "get", token);
+      dispatch({
+        type: USER_DETAILS_SUCCESS,
+        payload: data.user,
+      });
+    }
+  } catch (e) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload:
+        e.response && e.response.data.error ? e.response.data.error : e.error,
+    });
+  }
+};
+
+export const updateUserDetails =
+  (requestBody) => async (dispatch, getState) => {
+    try {
+      const {
+        userLogin: { token },
+      } = getState();
+      dispatch({
+        type: USER_UPDATE_REQUEST,
+      });
+
+      if (token) {
+        const data = await FormDataAPI(
+          "/user/updateDetails",
+          "post",
+          token,
+          requestBody
+        );
+        dispatch({
+          type: USER_UPDATE_SUCCESS,
+          payload: data.user,
+        });
+        dispatch({
+          type: USER_DETAILS_SUCCESS,
+          payload: data.user,
+        });
+      }
+    } catch (e) {
+      dispatch({
+        type: USER_UPDATE_FAIL,
+        payload:
+          e.response && e.response.data.error ? e.response.data.error : e.error,
+      });
+    }
+  };
+
+export const updateUserImage = (imageUrl) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_IMAGE_UPDATE_REQUEST,
+      payload: imageUrl,
     });
   } catch (e) {}
 };
