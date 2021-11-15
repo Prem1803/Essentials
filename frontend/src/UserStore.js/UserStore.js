@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import store from "../../store";
-import CoverLoader from "../Components/CoverLoader";
-import Footer from "../Components/Footer";
-import Navbar from "../Components/Navbar";
-import UserContent from "./components/UserContent";
-import UserSidebar from "./components/UserSidebar";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CoverLoader from "../core/Components/CoverLoader";
+import Footer from "../core/Components/Footer";
+import Navbar from "../core/Components/Navbar";
+import store from "../store";
+import StoreContents from "./components/StoreContents";
+import StoreHeader from "./components/StoreHeader";
+import StoreSidebar from "./components/StoreSidebar";
 
-const UserProfile = () => {
-  const [currentTab, setCurrentTab] = useState("Profile");
+const UserStore = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
   let user = store.getState().userLogin;
@@ -39,19 +39,22 @@ const UserProfile = () => {
       }
     }
   }, [isLoggedIn]);
+  const [currentTab, setCurrentTab] = useState("Products");
   if (loading) return <CoverLoader />;
 
   return (
-    <div className="essential-customer-account">
+    <div className="store-section">
       <Navbar />
+
+      <StoreHeader storeName={"Prem's Store"} />
       <div className="account-setting">
         <div className="container">
           <div className="row">
-            <UserSidebar
-              setCurrentTab={setCurrentTab}
+            <StoreSidebar
               currentTab={currentTab}
+              setCurrentTab={setCurrentTab}
             />
-            <UserContent currentTab={currentTab} />
+            <StoreContents currentTab={currentTab} />
           </div>
         </div>
       </div>
@@ -60,4 +63,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserStore;

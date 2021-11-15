@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getUserDetails,
   updateUserDetails,
@@ -32,7 +33,8 @@ const ProfileDetails = () => {
         email: user.userDetails.email,
         mobileNumber: user.userDetails.mobileNumber,
         alternateMobileNumber: user.userDetails.alternateMobileNumber,
-
+        seller: user.userDetails.seller,
+        sellerRightsApproved: user.userDetails.sellerRightsApproved,
         houseNumber: user.userDetails.address.houseNumber,
         area: user.userDetails.address.area,
         city: user.userDetails.address.city,
@@ -63,6 +65,8 @@ const ProfileDetails = () => {
         lastName: user.userDetails.lastName,
         email: user.userDetails.email,
         mobileNumber: user.userDetails.mobileNumber,
+        seller: user.userDetails.seller,
+        sellerRightsApproved: user.userDetails.sellerRightsApproved,
         alternateMobileNumber: user.userDetails.alternateMobileNumber,
         houseNumber: user.userDetails.address.houseNumber,
         area: user.userDetails.address.area,
@@ -106,9 +110,36 @@ const ProfileDetails = () => {
       dispatch(updateUserDetails(formData));
     }
   }, [selectedImage]);
+  const registerAsSeller = () => {
+    let formData = new FormData();
+    formData.append("seller", true);
+    dispatch(updateUserDetails(formData));
+  };
+  useEffect(() => {
+    console.log(userDetails);
+  }, [userDetails]);
   return (
     <div className="tab-pane fade show active">
-      <h2>Profile setting</h2>
+      <h2>
+        Profile setting
+        {userDetails && userDetails.seller === false ? (
+          <button
+            className="btn btn-orange float-right"
+            onClick={registerAsSeller}
+          >
+            {" "}
+            Become a Seller{" "}
+          </button>
+        ) : userDetails.sellerRightsApproved === false ? (
+          <span className="btn btn-orange float-right" disabled>
+            Your request to become a seller is under process.
+          </span>
+        ) : (
+          <Link to="/store" className="btn btn-success float-right" disabled>
+            View you store
+          </Link>
+        )}
+      </h2>
 
       <div className="profile_settingright">
         <div className="ui equal width form">

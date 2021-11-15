@@ -312,6 +312,47 @@ blockquote {
   }
 }
 
+.store-section-header {
+  padding: 50px 75px 0px;
+}
+
+.show-dropdown {
+  position: absolute;
+  inset: 0px auto auto 0px;
+  margin: 0px;
+  padding: 10px;
+  transform: translate(-3rem, 2rem);
+  background-color: rgb(184, 181, 181);
+  z-index: 100;
+  width: 100px;
+}
+
+/*Custom file input*/
+
+.wrapper {
+  text-align: center;
+  float: right;
+  margin-right: 6rem;
+}
+.wrapper #file-input {
+  display: none;
+}
+
+.wrapper label[for="file-input"] * {
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.wrapper label[for="file-input"] span {
+  margin-left: 10px;
+}
+
+.wrapper i.remove {
+  vertical-align: middle;
+  margin-left: 5px;
+  cursor: pointer;
+  display: none;
+}
 @media (min-width: 43.75em) {
   h1 {
     font-size: 2.5em;
@@ -5670,6 +5711,45 @@ a.read-moreblog:hover {
   height: 40px;
   margin-bottom: 20px !important;
 }
+.order_settingright .ui.form select {
+  border: 1px solid #9e9e9e !important;
+  color: #f46432 !important;
+  border-radius: 0 !important;
+  width: 150px;
+}
+.order_settingright .ui.form select:focus {
+  color: #2b2f4c !important;
+  border: 1px solid #f55d2c !important;
+}
+
+.show-modal {
+  background: #495057;
+  opacity: 0.94;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: 0;
+}
+.ui.form .fields .field input.feature-input {
+  width: 90%;
+}
+.ui.form .fields .field i.feature-input {
+  font-size: 24px;
+  position: relative;
+  top: 0px;
+  right: 10px;
+  color: #f46432;
+}
+
+.product-modal-dialog {
+  margin: 0 auto;
+  width: 80%;
+}
 
 .profile_settingright .ui.form textarea {
   height: auto;
@@ -6366,11 +6446,6 @@ select:focus-visible {
 }
 /* ==== Payment successfully css end here ==== */
 /* ============================ New css end here ============================ */
-
-.modal {
-  background: #73ba76;
-  opacity: 0.9;
-}
 
 /* =========== 1024 ========== */
 @media (max-width: 1024px) {

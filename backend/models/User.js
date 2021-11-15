@@ -57,6 +57,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    seller: {
+      type: Boolean,
+      default: false,
+    },
+    sellerRightsApproved: {
+      type: Boolean,
+      default: false,
+    },
     address: {
       houseNumber: {
         type: String,

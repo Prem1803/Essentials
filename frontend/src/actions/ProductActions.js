@@ -13,6 +13,9 @@ import {
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
   PRODUCT_FAIL,
+  USER_PRODUCT_LIST_REQUEST,
+  USER_PRODUCT_LIST_SUCCESS,
+  USER_PRODUCT_LIST_FAIL,
 } from "../constants/productConstants";
 
 export const getRecentProducts = () => async (dispatch) => {
@@ -98,3 +101,30 @@ export const getSingleProduct = (requestBody) => async (dispatch) => {
     });
   }
 };
+
+export const getAllUserProducts =
+  (requestBody) => async (dispatch, getState) => {
+    try {
+      const {
+        userLogin: { token },
+      } = getState();
+
+      let data;
+      if (token) {
+        data = await APICore("/storeProducts", "post", token, requestBody);
+        dispatch({
+          type: USER_PRODUCT_LIST_REQUEST,
+        });
+        dispatch({
+          type: USER_PRODUCT_LIST_SUCCESS,
+          payload: data,
+        });
+      }
+    } catch (e) {
+      dispatch({
+        type: USER_PRODUCT_LIST_FAIL,
+        payload:
+          e.response && e.response.data.error ? e.response.data.error : e.error,
+      });
+    }
+  };

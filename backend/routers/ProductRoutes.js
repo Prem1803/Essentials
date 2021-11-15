@@ -30,6 +30,7 @@ ProductRouter.post(
         owner: userId,
         features: JSON.parse(req.body.productFeatures),
         tags: JSON.parse(req.body.productTags),
+        quantitiesLeft: req.body.quantity,
       });
       await product.save();
       res.status(200).send({ product });
@@ -65,6 +66,9 @@ ProductRouter.post(
           const category = await Category.findOne({ _id: categoryId });
           if (!category) throw new Error("Category not found");
           product.category = category._id;
+        } else if (update === "quantity") {
+          product[update] = req.body[update];
+          product.quantitiesLeft = req.body[update];
         } else product[update] = req.body[update];
       }
       await product.save();
@@ -182,4 +186,40 @@ ProductRouter.get("/products/popular", async (req, res) => {
   }
 });
 
+ProductRouter.post("/storeProducts", auth, async (req, res) => {
+  try {
+    let { search, page } = req.body;
+    const limit = 10;
+    if (!search) search = "";
+    if (!page || Number(page) < 1) page = 1;
+    let itemsToSkip = (Number(page) - 1) * Number(limit);
+    const userId = req.user._id;
+
+    let products = await Product.find({
+      owner: userId,
+      $or: [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { features: { $regex: search, $options: "i" } },
+      ],
+    })
+      .populate("category", { title: 1 })
+      .sort({ updatedAt: -1 })
+      .skip(itemsToSkip)
+      .limit(limit);
+    let total = await Product.find({
+      owner: userId,
+
+      $or: [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { features: { $regex: search, $options: "i" } },
+      ],
+    }).countDocuments();
+
+    res.status(200).send({ products, total });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
 module.exports = ProductRouter;

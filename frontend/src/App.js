@@ -18,6 +18,7 @@ import CategoryWiseProducts from "./core/CategoryWiseProducts/CategoryWiseProduc
 import SearchWiseProducts from "./core/CategoryWiseProducts/SearchWiseProducts";
 import SingleProduct from "./core/SingleProduct/SingleProduct";
 import store from "./store";
+import UserStore from "./UserStore.js/UserStore";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -53,14 +54,8 @@ const App = () => {
           element={<SingleProduct />}
         ></Route>
 
-        <Route
-          exact
-          path="/profile"
-          element={loggedIn ? <UserProfile /> : <Navigate to="/login" />}
-        ></Route>
-        {/* To Do
-        /register-seller
-        */}
+        <Route exact path="/profile" element={<UserProfile />}></Route>
+        <Route exact path="/store" element={<UserStore />}></Route>
       </Routes>
     </Router>
   );

@@ -32,6 +32,11 @@ const productSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    quantitiesLeft: {
+      type: Number,
+      required: true,
+      trim: true,
+    },
     features: [{ type: String, trim: true }],
     tags: [{ type: String, trim: true }],
     category: {
