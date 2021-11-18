@@ -11,6 +11,11 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     amount: {
       type: Number,
       required: true,

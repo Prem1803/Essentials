@@ -14,6 +14,12 @@ import {
   USER_PRODUCT_LIST_REQUEST,
   USER_PRODUCT_LIST_SUCCESS,
   USER_PRODUCT_LIST_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_UPDATE_REQUEST,
+  PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_UPDATE_FAIL,
 } from "../constants/productConstants";
 
 export const recentProductsReducer = (state = { products: [] }, action) => {
@@ -54,6 +60,36 @@ export const productListReducer = (state = { products: [] }, action) => {
       };
     case PRODUCT_LIST_FAIL:
       return { loading: false, products: [], error: action.payload };
+    default:
+      return state;
+  }
+};
+export const createProductReducer = (state = { product: {} }, action) => {
+  switch (action.type) {
+    case PRODUCT_CREATE_REQUEST:
+      return { loading: true, product: {} };
+    case PRODUCT_CREATE_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      };
+    case PRODUCT_CREATE_FAIL:
+      return { loading: false, product: {}, error: action.payload };
+    default:
+      return state;
+  }
+};
+export const updateProductReducer = (state = { product: {} }, action) => {
+  switch (action.type) {
+    case PRODUCT_UPDATE_REQUEST:
+      return { loading: true, product: {} };
+    case PRODUCT_UPDATE_SUCCESS:
+      return {
+        loading: false,
+        product: action.payload,
+      };
+    case PRODUCT_UPDATE_FAIL:
+      return { loading: false, product: {}, error: action.payload };
     default:
       return state;
   }

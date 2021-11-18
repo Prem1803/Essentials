@@ -18,18 +18,13 @@ const ContactDetails = () => {
           <div className="col-xl-7 col-lg-7 col-md-12">
             <div className="contact-left">
               <h2> Developed by Prem Kumar </h2>
-              {/* <img
-                src="img/about/prem.jpeg"
-                className="img-fluid"
-                alt="Developed by Prem"
-              /> */}
               <div className="item">
                 <div className="row">
                   <div className="group-img">
                     <img
                       src="img/about/prem.jpeg"
                       className="img-fluid"
-                      alt="Developed by Prem"
+                      alt="Prem"
                     />
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import { APICore } from "../api/APICore";
+import { APICore, FormDataAPI } from "../api/APICore";
 
 import {
   RECENT_PRODUCT_REQUEST,
@@ -16,6 +16,12 @@ import {
   USER_PRODUCT_LIST_REQUEST,
   USER_PRODUCT_LIST_SUCCESS,
   USER_PRODUCT_LIST_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_UPDATE_REQUEST,
+  PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_UPDATE_FAIL,
 } from "../constants/productConstants";
 
 export const getRecentProducts = () => async (dispatch) => {
@@ -128,3 +134,77 @@ export const getAllUserProducts =
       });
     }
   };
+
+export const createProduct = (requestBody) => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { token },
+    } = getState();
+
+    let data;
+    if (token) {
+      data = await FormDataAPI("/product/create", "post", token, requestBody);
+      dispatch({
+        type: PRODUCT_CREATE_REQUEST,
+      });
+      dispatch({
+        type: PRODUCT_CREATE_SUCCESS,
+        payload: data,
+      });
+      data = await APICore("/storeProducts", "post", token, {
+        page: 1,
+        search: "",
+      });
+      dispatch({
+        type: USER_PRODUCT_LIST_REQUEST,
+      });
+      dispatch({
+        type: USER_PRODUCT_LIST_SUCCESS,
+        payload: data,
+      });
+    }
+  } catch (e) {
+    dispatch({
+      type: PRODUCT_CREATE_FAIL,
+      payload:
+        e.response && e.response.data.error ? e.response.data.error : e.error,
+    });
+  }
+};
+
+export const updateProduct = (requestBody) => async (dispatch, getState) => {
+  try {
+    const {
+      userLogin: { token },
+    } = getState();
+
+    let data;
+    if (token) {
+      data = await FormDataAPI("/product/update", "post", token, requestBody);
+      dispatch({
+        type: PRODUCT_UPDATE_REQUEST,
+      });
+      dispatch({
+        type: PRODUCT_UPDATE_SUCCESS,
+        payload: data,
+      });
+      data = await APICore("/storeProducts", "post", token, {
+        page: 1,
+        search: "",
+      });
+      dispatch({
+        type: USER_PRODUCT_LIST_REQUEST,
+      });
+      dispatch({
+        type: USER_PRODUCT_LIST_SUCCESS,
+        payload: data,
+      });
+    }
+  } catch (e) {
+    dispatch({
+      type: PRODUCT_UPDATE_FAIL,
+      payload:
+        e.response && e.response.data.error ? e.response.data.error : e.error,
+    });
+  }
+};

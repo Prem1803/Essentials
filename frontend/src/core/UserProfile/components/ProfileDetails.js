@@ -113,6 +113,7 @@ const ProfileDetails = () => {
   const registerAsSeller = () => {
     let formData = new FormData();
     formData.append("seller", true);
+    formData.append("store", `${userDetails.firstName}'s Store`);
     dispatch(updateUserDetails(formData));
   };
   useEffect(() => {
@@ -171,7 +172,6 @@ const ProfileDetails = () => {
                         ) : (
                           <img
                             src={ImageData !== "" ? ImageURL : ""}
-                            // className="product-img-fluid"
                             alt="Product"
                           />
                         )}

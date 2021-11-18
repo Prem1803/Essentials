@@ -30,7 +30,7 @@ const SingleCategory = ({ category }) => {
               <img
                 src={ImageData && URL.createObjectURL(ImageData)}
                 className="product-img-fluid"
-                alt="Product"
+                alt={category && category.title}
               />
             )}
           </div>

@@ -11,6 +11,7 @@ import StoreSidebar from "./components/StoreSidebar";
 const UserStore = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [orderStatus, setOrderStatus] = useState("");
   let user = store.getState().userLogin;
   useEffect(() => {
     if (user.token) {
@@ -46,7 +47,11 @@ const UserStore = () => {
     <div className="store-section">
       <Navbar />
 
-      <StoreHeader storeName={"Prem's Store"} />
+      <StoreHeader
+        setCurrentTab={setCurrentTab}
+        setOrderStatus={setOrderStatus}
+        currentTab={currentTab}
+      />
       <div className="account-setting">
         <div className="container">
           <div className="row">
@@ -54,7 +59,7 @@ const UserStore = () => {
               currentTab={currentTab}
               setCurrentTab={setCurrentTab}
             />
-            <StoreContents currentTab={currentTab} />
+            <StoreContents currentTab={currentTab} orderStatus={orderStatus} />
           </div>
         </div>
       </div>

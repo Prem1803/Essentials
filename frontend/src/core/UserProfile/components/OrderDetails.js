@@ -98,7 +98,11 @@ const OrderDetails = ({ setShowOrder, selectedOrder }) => {
                     URL.createObjectURL(selectedOrder.ImageData)
                   }
                   className="product-img-fluid"
-                  alt="Product"
+                  alt={
+                    selectedOrder &&
+                    selectedOrder.product &&
+                    selectedOrder.product.name
+                  }
                 />
               </li>
 

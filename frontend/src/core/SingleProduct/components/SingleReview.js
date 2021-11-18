@@ -37,8 +37,7 @@ const SingleReview = ({ review }) => {
         ) : (
           <img
             src={ImageData !== "" ? URL.createObjectURL(ImageData) : ""}
-            // className="product-img-fluid"
-            alt="img"
+            alt={review.user.firstName}
           />
         )}
       </div>

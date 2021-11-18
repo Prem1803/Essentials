@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getStoreOrders } from "../../actions/OrderActions";
+import CoverLoader from "../../core/Components/CoverLoader";
+import store from "../../store";
 import OrderListItem from "./OrderListItem";
 
-const OrderList = () => {
+const OrderList = ({ orderStatus }) => {
   const [page, setPage] = useState(1);
+  const [orders, setOrders] = useState([]);
+  const [status, setStatus] = useState(orderStatus);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
   const incrementPage = () => {
-    if (Number(page) * Number(10) < Number(100)) {
+    if (Number(page) * Number(10) < Number(total)) {
       setPage(page + 1);
     }
   };
@@ -13,6 +21,28 @@ const OrderList = () => {
       setPage(page - 1);
     }
   };
+  let storeOrders = store.getState().storeOrders;
+  store.subscribe(() => {
+    storeOrders = store.getState().storeOrders;
+    if (storeOrders.orders) {
+      setOrders(storeOrders.orders);
+    }
+    if (storeOrders.total) {
+      setTotal(storeOrders.total);
+    }
+    if (storeOrders.loading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getStoreOrders({ status, page }));
+  }, [status, page]);
+  useEffect(() => {
+    setStatus(orderStatus);
+  }, [orderStatus]);
   return (
     <div className="card">
       {" "}
@@ -24,10 +54,14 @@ const OrderList = () => {
             <div className="ui equal width form">
               <div className="field ">
                 <span className="custom-dropdown">
-                  <select name="status">
-                    <option value="all">All</option>
-                    <option value="pending">Pending</option>
-                    <option value="completed">Completed</option>
+                  <select
+                    name="status"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <option value="">All</option>
+                    <option value="Placed">Pending</option>
+                    <option value="Delivered">Completed</option>
                   </select>
                 </span>
               </div>
@@ -52,16 +86,13 @@ const OrderList = () => {
               </tr>{" "}
             </thead>{" "}
             <tbody>
-              <OrderListItem />
-              <OrderListItem />
-              <OrderListItem />
-              <OrderListItem />
-              <OrderListItem />
-              <OrderListItem />
-              <OrderListItem />
-              <OrderListItem />
-              <OrderListItem />
-              <OrderListItem />
+              {loading ? (
+                <CoverLoader />
+              ) : (
+                orders.map((order, index) => {
+                  return <OrderListItem order={order} key={index} />;
+                })
+              )}
             </tbody>
           </table>{" "}
         </div>{" "}

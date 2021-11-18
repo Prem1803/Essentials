@@ -1,12 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getStoreOrderSummary } from "../../actions/OrderActions";
+import { getUserDetails, updateUserDetails } from "../../actions/UserActions";
+import CoverLoader from "../../core/Components/CoverLoader";
+import store from "../../store";
 
-const StoreHeader = ({ storeName }) => {
-  const [store, setStore] = useState(storeName);
+const StoreHeader = ({ currentTab, setCurrentTab, setOrderStatus }) => {
+  const [storeName, setStore] = useState("Prem's Store");
   const [edit, setEdit] = useState(false);
+  const [total, setTotal] = useState("");
+  const [completed, setCompleted] = useState("");
+  const [pending, setPending] = useState("");
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const saveStoreName = () => {
-    console.log(store);
     setEdit(false);
+    let formData = new FormData();
+    formData.append("store", storeName);
+    dispatch(updateUserDetails(formData));
   };
+  let user = store.getState().user;
+  let storeOrderSummary = store.getState().storeOrderSummary;
+  useEffect(() => {
+    if (user.userDetails) {
+      setStore(user.userDetails.store);
+    } else {
+      dispatch(getUserDetails());
+    }
+    if (storeOrderSummary.total === 0) {
+      setLoading(true);
+      dispatch(getStoreOrderSummary());
+    } else {
+      setTotal(storeOrderSummary.total);
+      setPending(storeOrderSummary.pending);
+      setCompleted(storeOrderSummary.completed);
+    }
+  }, []);
+  store.subscribe(() => {
+    user = store.getState().user;
+    storeOrderSummary = store.getState().storeOrderSummary;
+    setTotal(storeOrderSummary.total);
+    setPending(storeOrderSummary.pending);
+    setCompleted(storeOrderSummary.completed);
+    if (storeOrderSummary.loading) setLoading(true);
+    else {
+      setLoading(false);
+    }
+    if (user.userDetails) {
+      setStore(user.userDetails.store);
+    }
+  });
   return (
     <div className="store-section-header">
       <div className="container">
@@ -17,10 +60,11 @@ const StoreHeader = ({ storeName }) => {
                 <div className="ui left icon input field w-100">
                   <input
                     type="text"
-                    value={store}
+                    value={storeName}
                     onChange={(e) => {
                       setStore(e.target.value);
                     }}
+                    placeholder="Your store Name"
                   />
                   <button className="btn btn-orange" onClick={saveStoreName}>
                     Save
@@ -30,7 +74,7 @@ const StoreHeader = ({ storeName }) => {
             ) : (
               <h1 className="heading_text">
                 {" "}
-                {store}{" "}
+                {storeName}{" "}
                 <i className="fa fa-edit" onClick={() => setEdit(true)}></i>
               </h1>
             )}
@@ -49,10 +93,25 @@ const StoreHeader = ({ storeName }) => {
             {" "}
             <div className="card-body text-center">
               {" "}
-              <h5>Total Orders</h5> <h2>834</h2>{" "}
-              <button className="btn btn-outline-primary btn-sm">
-                View All
-              </button>{" "}
+              <h5>Total Orders</h5>
+              {loading ? (
+                <h2>
+                  <CoverLoader />
+                </h2>
+              ) : (
+                <>
+                  <h2>{total}</h2>{" "}
+                  <button
+                    className="btn btn-outline-primary btn-sm"
+                    onClick={() => {
+                      setOrderStatus("");
+                      if (currentTab !== "Orders") setCurrentTab("Orders");
+                    }}
+                  >
+                    View All
+                  </button>
+                </>
+              )}{" "}
             </div>{" "}
           </div>{" "}
         </div>{" "}
@@ -62,10 +121,26 @@ const StoreHeader = ({ storeName }) => {
             {" "}
             <div className="card-body text-center">
               {" "}
-              <h5>Completed Orders</h5> <h2> 238</h2>{" "}
-              <button className="btn btn-outline-warning btn-sm">
-                View All
-              </button>{" "}
+              <h5>Completed Orders</h5>
+              {loading ? (
+                <h2>
+                  <CoverLoader />
+                </h2>
+              ) : (
+                <>
+                  {" "}
+                  <h2> {completed}</h2>{" "}
+                  <button
+                    className="btn btn-outline-warning btn-sm"
+                    onClick={() => {
+                      setOrderStatus("Delivered");
+                      if (currentTab !== "Orders") setCurrentTab("Orders");
+                    }}
+                  >
+                    View All
+                  </button>
+                </>
+              )}
             </div>{" "}
           </div>{" "}
         </div>{" "}
@@ -75,10 +150,26 @@ const StoreHeader = ({ storeName }) => {
             {" "}
             <div className="card-body text-center">
               {" "}
-              <h5>Pending Orders</h5> <h2>562</h2>{" "}
-              <button className="btn btn-outline-success btn-sm">
-                View All
-              </button>{" "}
+              <h5>Pending Orders</h5>
+              {loading ? (
+                <h2>
+                  <CoverLoader />
+                </h2>
+              ) : (
+                <>
+                  {" "}
+                  <h2>{pending}</h2>{" "}
+                  <button
+                    className="btn btn-outline-success btn-sm"
+                    onClick={() => {
+                      setOrderStatus("Placed");
+                      if (currentTab !== "Orders") setCurrentTab("Orders");
+                    }}
+                  >
+                    View All
+                  </button>
+                </>
+              )}
             </div>{" "}
           </div>{" "}
         </div>{" "}

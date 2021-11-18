@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getAllCategories } from "../../actions/CategoryActions";
+import { createProduct, updateProduct } from "../../actions/ProductActions";
 import { FetchImage } from "../../api/APICore";
 import store from "../../store";
 
@@ -15,6 +16,7 @@ const EditProduct = ({ setProduct, productDetails }) => {
     features: [],
   });
   useEffect(() => {
+    console.log(productDetails);
     if (productDetails) {
       if (Object.keys(productDetails).length !== 0)
         setProductDetails({
@@ -50,7 +52,7 @@ const EditProduct = ({ setProduct, productDetails }) => {
 
   const onTagsChange = (e) => {
     let tagsString = e.target.value;
-    const allTags = tagsString.split(",");
+    const allTags = tagsString.split(", ");
     let tags = [];
     for (const tag of allTags) tags.push(tag.trim());
     setProductDetails({ ...product, tags: tags });
@@ -78,11 +80,18 @@ const EditProduct = ({ setProduct, productDetails }) => {
     let formData = new FormData();
     console.log(product);
     for (const key of Object.keys(product)) {
-      formData.append(key, product[key]);
+      let value = product[key];
+      if (key === "tags") {
+        formData.append("productTags", JSON.stringify(value));
+      } else if (key === "features") {
+        formData.append("productFeatures", JSON.stringify(value));
+      } else formData.append(key, value);
     }
     for (const media of imagesForUpload) {
       formData.append("media", media);
     }
+    if (product.productId) dispatch(updateProduct(formData));
+    else dispatch(createProduct(formData));
   };
   return (
     <div className="ui equal width form">
@@ -131,7 +140,7 @@ const EditProduct = ({ setProduct, productDetails }) => {
           <span className="custom-dropdown">
             <select
               name="categoryId"
-              value={product && product.category && product.category._id}
+              value={product && product.categoryId}
               onChange={onChange}
             >
               <option value="">Select</option>
@@ -207,7 +216,17 @@ const EditProduct = ({ setProduct, productDetails }) => {
           <h5 className="mb-3">
             {" "}
             Features
-            <i className="fas fa-plus-circle feature-input mt-0 mr-5 pr-5 float-right"></i>
+            <i
+              className="fas fa-plus-circle feature-input mt-0 mr-5 pr-5 float-right"
+              onClick={(e) => {
+                let features = product.features;
+                features.push("");
+                setProductDetails({
+                  ...product,
+                  features: features,
+                });
+              }}
+            ></i>
           </h5>
           {product &&
             product.features &&
@@ -219,8 +238,26 @@ const EditProduct = ({ setProduct, productDetails }) => {
                     className="mb-2 feature-input"
                     key={index}
                     value={feature}
+                    onChange={(e) => {
+                      let features = product.features;
+                      features[index] = e.target.value;
+                      setProductDetails({
+                        ...product,
+                        features: features,
+                      });
+                    }}
                   />
-                  <i className="fas fa-trash feature-input mt-2"></i>
+                  <i
+                    className="fas fa-trash feature-input mt-2"
+                    onClick={(e) => {
+                      let features = product.features;
+                      features.splice(index, 1);
+                      setProductDetails({
+                        ...product,
+                        features: features,
+                      });
+                    }}
+                  ></i>
                 </>
               );
             })}

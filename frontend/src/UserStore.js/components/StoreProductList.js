@@ -11,17 +11,19 @@ const StoreProductList = () => {
   const [product, setProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const incrementPage = () => {
-    if (Number(page) * Number(10) < Number(100)) {
+    if (Number(page) * Number(10) < Number(total)) {
       setPage(page + 1);
+      setLoading(true);
     }
   };
   const decrementPage = () => {
     if (Number(page) > 1) {
       setPage(page - 1);
+      setLoading(true);
     }
   };
 
@@ -99,7 +101,9 @@ const StoreProductList = () => {
                   </tr>{" "}
                 </thead>{" "}
                 <tbody>
-                  {!loading &&
+                  {loading ? (
+                    <CoverLoader />
+                  ) : (
                     products.map((userproduct, index) => {
                       return (
                         <ProductListItem
@@ -108,7 +112,8 @@ const StoreProductList = () => {
                           key={index}
                         />
                       );
-                    })}
+                    })
+                  )}
                 </tbody>
               </table>{" "}
             </div>

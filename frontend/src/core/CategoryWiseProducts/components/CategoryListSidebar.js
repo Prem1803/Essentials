@@ -18,11 +18,11 @@ const CategoryListSidebar = () => {
   });
 
   return (
-    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 category-sidebar">
-      <div class="filter-group">
-        <h3 class="title">Categories</h3>
-        <div class="filter-content">
-          <ul class="list-menu">
+    <div className="col-xl-3 col-lg-4 col-md-4 col-sm-12 category-sidebar">
+      <div className="filter-group">
+        <h3 className="title">Categories</h3>
+        <div className="filter-content">
+          <ul className="list-menu">
             {category &&
               category.map((eachCategory, index) => {
                 return (

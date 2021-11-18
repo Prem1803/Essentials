@@ -55,7 +55,7 @@ const SingleCartItem = ({ cartItem, UpdateTotal }) => {
               <img
                 src={ImageData && URL.createObjectURL(ImageData)}
                 className="cart-product-img-fluid"
-                alt="Product"
+                alt={cartItem && cartItem.name}
               />
             )}
           </div>
@@ -82,7 +82,7 @@ const SingleCartItem = ({ cartItem, UpdateTotal }) => {
                 if (quantity > 1) updateQuantity(quantity - 1);
               }}
             >
-              <i class="fas fa-minus"></i>
+              <i className="fas fa-minus"></i>
             </button>
           </span>
 
@@ -103,7 +103,7 @@ const SingleCartItem = ({ cartItem, UpdateTotal }) => {
                 if (quantity < 10) updateQuantity(quantity + 1);
               }}
             >
-              <i class="fas fa-plus"></i>
+              <i className="fas fa-plus"></i>
             </button>
           </span>
         </div>
@@ -117,7 +117,7 @@ const SingleCartItem = ({ cartItem, UpdateTotal }) => {
           </span>
 
           <Link to="/my-cart" onClick={removeItem}>
-            <i class="fas fa-trash"></i>
+            <i className="fas fa-trash"></i>
           </Link>
         </div>
       </td>

@@ -65,6 +65,9 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    store: {
+      type: String,
+    },
     address: {
       houseNumber: {
         type: String,

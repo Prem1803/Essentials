@@ -76,21 +76,12 @@ const ProductDetails = ({ product }) => {
               <img
                 src={URL.createObjectURL(images[currentImage])}
                 className="product-img-fluid"
-                alt="Product"
+                alt={product && product.name}
               />
             )}
           </div>
 
           <ul className="list-inline small_products">
-            {/* <li className="list-inline-item">
-              <div className="img-product">
-                {images.length < 2 ? (
-                  <CoverLoader immage={true} />
-                ) : (
-                  <img src={URL.createObjectURL(images[1])} alt="Product" />
-                )}
-              </div>
-            </li> */}
             {images.map((image, index) => {
               if (index !== currentImage) {
                 return (
@@ -101,7 +92,10 @@ const ProductDetails = ({ product }) => {
                         setCurrentImage(index);
                       }}
                     >
-                      <img src={URL.createObjectURL(image)} alt="Product" />
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt={product && product.name}
+                      />
                     </div>
                   </li>
                 );

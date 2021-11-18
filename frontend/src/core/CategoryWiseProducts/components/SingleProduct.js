@@ -83,7 +83,7 @@ const SingleProduct = ({ product }) => {
                 <img
                   src={ImageData && URL.createObjectURL(ImageData)}
                   className="product-img-fluid"
-                  alt="Product"
+                  alt={product && product.name}
                 />
               )}
             </div>

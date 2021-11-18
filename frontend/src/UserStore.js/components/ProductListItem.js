@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProductListItem = ({ setProduct, product }) => {
   return (
@@ -7,7 +8,9 @@ const ProductListItem = ({ setProduct, product }) => {
 
       <td>{product && product.category.title}</td>
       <td className="font-weight-semibold">{product && product.quantity}</td>
-      <td className="font-weight-semibold">28</td>
+      <td className="font-weight-semibold">
+        {product && product.quantitiesLeft}
+      </td>
       <td className="font-weight-semibold">
         <i className="fa fa-rupee-sign"></i> {product && product.amount}
       </td>
@@ -15,9 +18,12 @@ const ProductListItem = ({ setProduct, product }) => {
         {" "}
         <div className="btn-group">
           {" "}
-          <button className="btn btn-sm btn-primary mr-3">
+          <Link
+            to={product && product._id ? `/product/${product._id}` : ""}
+            className="btn btn-sm btn-orange mr-3"
+          >
             <i className="fa fa-eye" />
-          </button>
+          </Link>
           <button
             className="btn btn-sm btn-primary mr-3"
             onClick={() => {

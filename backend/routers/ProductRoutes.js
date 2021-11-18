@@ -69,6 +69,10 @@ ProductRouter.post(
         } else if (update === "quantity") {
           product[update] = req.body[update];
           product.quantitiesLeft = req.body[update];
+        } else if (update === "productFeatures") {
+          product.features = JSON.parse(req.body.productFeatures);
+        } else if (update === "productTags") {
+          product.tags = JSON.parse(req.body.productTags);
         } else product[update] = req.body[update];
       }
       await product.save();
