@@ -19,7 +19,7 @@ const ProductDetails = ({ product }) => {
       let starsArray = [];
       let emptystarsArray = [];
       for (var i = 0; i < rating; i++) starsArray.push(i);
-      for (i = 4; i > rating; i--) {
+      for (i = 5; i > rating; i--) {
         emptystarsArray.push(i);
       }
       setStars(starsArray);
@@ -85,7 +85,7 @@ const ProductDetails = ({ product }) => {
             {images.map((image, index) => {
               if (index !== currentImage) {
                 return (
-                  <li className="list-inline-item">
+                  <li className="list-inline-item" key={index}>
                     <div
                       className="img-product"
                       onClick={() => {
@@ -112,15 +112,15 @@ const ProductDetails = ({ product }) => {
           <ul className="list-inline rating">
             {stars.map((index) => {
               return (
-                <li className="list-inline-item">
-                  <i className="fa fa-star" key={index}></i>
+                <li className="list-inline-item" key={index}>
+                  <i className="fa fa-star"></i>
                 </li>
               );
             })}
             {emptyStars.map((index) => {
               return (
-                <li className="list-inline-item">
-                  <i className="far fa-star" key={index}></i>
+                <li className="list-inline-item" key={index}>
+                  <i className="far fa-star"></i>
                 </li>
               );
             })}

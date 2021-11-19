@@ -87,7 +87,7 @@ const Header = () => {
                     <span className="contacts-classic-title">
                       <strong>Call us:</strong>
                     </span>{" "}
-                    +91 820 971 8559
+                    +91 820 XXX XXXX
                   </li>
                 </ul>
               </div>
@@ -115,7 +115,7 @@ const Header = () => {
 
                   {user ? (
                     <li className="dropdown-cartview account-view">
-                      <div className="ui dropdown accounts" tabindex="0">
+                      <div className="ui dropdown accounts" tabIndex="0">
                         <i
                           className="fas fa-user user-topicon"
                           onMouseEnter={() => {

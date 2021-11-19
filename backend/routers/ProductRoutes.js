@@ -102,13 +102,15 @@ ProductRouter.post("/product/single", async (req, res) => {
     if (!productId) throw new Error("Product not found.");
     const product = await Product.findOne({
       _id: productId,
-    }).populate({
-      path: "reviews",
-      populate: {
-        path: "user",
-        select: { firstName: 1, lastName: 1, profile: 1 },
-      },
-    });
+    })
+      .populate("owner", { store: 1 })
+      .populate({
+        path: "reviews",
+        populate: {
+          path: "user",
+          select: { firstName: 1, lastName: 1, profile: 1 },
+        },
+      });
 
     res.status(200).send({ product });
   } catch (error) {
@@ -134,6 +136,7 @@ ProductRouter.post("/products", async (req, res) => {
           { features: { $regex: search, $options: "i" } },
         ],
       })
+        .populate("owner", { store: 1 })
         .sort({ updatedAt: -1 })
         .skip(itemsToSkip)
         .limit(limit);
@@ -172,7 +175,10 @@ ProductRouter.post("/products", async (req, res) => {
 
 ProductRouter.get("/products/recent", async (req, res) => {
   try {
-    let products = await Product.find({}).sort({ updatedAt: -1 }).limit(8);
+    let products = await Product.find({})
+      .populate("owner", { store: 1 })
+      .sort({ updatedAt: -1 })
+      .limit(8);
     res.status(200).send({ products });
   } catch (error) {
     res.status(400).send({ error: error.message });
@@ -182,6 +188,7 @@ ProductRouter.get("/products/recent", async (req, res) => {
 ProductRouter.get("/products/popular", async (req, res) => {
   try {
     let products = await Product.find({ onSale: true })
+      .populate("owner", { store: 1 })
       .sort({ updatedAt: -1 })
       .limit(8);
     res.status(200).send({ products });

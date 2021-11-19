@@ -80,26 +80,6 @@ const Navbar = ({ level }) => {
   }, []);
   return (
     <>
-      <div className="top-header">
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <ul className="list-inline">
-                <li className="list-inline-item">
-                  <span className="email-classic-title">Email:- </span>
-                  prem47645@gmail.com
-                </li>
-
-                <li className="list-inline-item">
-                  <span className="contacts-classic-title">Mobile:- </span>
-                  +91 820 971 8559
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="home-header home-header2">
         <header className="essential-header clearfix">
           <div className="essential-top-header d-block d-xl-none d-lg-none">

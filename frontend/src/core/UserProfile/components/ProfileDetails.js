@@ -116,9 +116,7 @@ const ProfileDetails = () => {
     formData.append("store", `${userDetails.firstName}'s Store`);
     dispatch(updateUserDetails(formData));
   };
-  useEffect(() => {
-    console.log(userDetails);
-  }, [userDetails]);
+
   return (
     <div className="tab-pane fade show active">
       <h2>
@@ -171,7 +169,11 @@ const ProfileDetails = () => {
                           <CoverLoader image={true} />
                         ) : (
                           <img
-                            src={ImageData !== "" ? ImageURL : ""}
+                            src={
+                              ImageData !== ""
+                                ? ImageURL
+                                : "img/logos/profile-img.png"
+                            }
                             alt="Product"
                           />
                         )}

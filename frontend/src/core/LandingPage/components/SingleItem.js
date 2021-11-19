@@ -20,7 +20,7 @@ const SingleItem = ({ product }) => {
       let starsArray = [];
       let emptystarsArray = [];
       for (var i = 0; i < rating; i++) starsArray.push(i);
-      for (i = 4; i > rating; i--) {
+      for (i = 5; i > rating; i--) {
         emptystarsArray.push(i);
       }
       setStars(starsArray);
@@ -100,7 +100,7 @@ const SingleItem = ({ product }) => {
             <span className="seller-details">
               Sold by:
               <span className="seller-name">
-                <Link to="/store">General store</Link>
+                {product && product.owner && product.owner.store}
               </span>
             </span>
           </div>

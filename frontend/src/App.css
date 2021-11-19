@@ -4511,14 +4511,10 @@ a.read-moreblog:hover {
   position: relative;
 }
 
-.contact-left .group-img img {
-  width: 250px;
-  height: 250px;
-  box-shadow: 3px 2px 8px 0 #9e9e9e;
-  position: relative;
-  left: 10%;
-  margin: 10px;
-  border-radius: 50%;
+.item .row img {
+  width: 300px;
+  margin: 2rem auto;
+  border-radius: 1rem;
 }
 
 .about-service .working-content {

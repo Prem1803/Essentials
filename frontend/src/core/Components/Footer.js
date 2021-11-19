@@ -46,16 +46,6 @@ const Footer = ({ level }) => {
 
                 <ul className="list-inline social-icon">
                   <li className="list-inline-item">
-                    <a href="https://www.instagram.com/prem_0318/">
-                      <img
-                        src={`${path}img/logos/instagram.png`}
-                        alt="Instagram"
-                        title="Instagram"
-                      />
-                    </a>
-                  </li>
-
-                  <li className="list-inline-item">
                     <a href="https://www.linkedin.com/in/prem-kumar-nitd/">
                       <img
                         src={`${path}img/logos/linkedIn.png`}
