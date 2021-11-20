@@ -4,6 +4,7 @@
   "description": "Essentials is a online grocery ordering application",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon backend/app",
     "server": "nodemon backend/app",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
