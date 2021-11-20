@@ -72,27 +72,33 @@ const userSchema = new mongoose.Schema(
       houseNumber: {
         type: String,
         trim: true,
+        default: "",
       },
       area: {
         type: String,
         trim: true,
+        default: "",
       },
       city: {
         type: String,
         trim: true,
+        default: "",
       },
       state: {
         type: String,
         trim: true,
+        default: "",
       },
     },
     cart: {
       type: Map,
       of: cartSchema,
+      default: {},
     },
     wishlist: {
       type: Map,
       of: wishListSchema,
+      default: {},
     },
   },
   {

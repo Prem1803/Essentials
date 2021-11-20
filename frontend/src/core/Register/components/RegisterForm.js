@@ -27,7 +27,7 @@ const RegisterForm = () => {
       setLoading(false);
     }
     if (userRegister.token) {
-      navigate("/");
+      navigate("/profile");
     }
   });
   return (
