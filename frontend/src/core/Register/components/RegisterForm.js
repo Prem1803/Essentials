@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { register } from "../../../actions/UserActions";
+import { toast } from "react-toastify";
+import { register, resetRegistrationError } from "../../../actions/UserActions";
 import store from "../../../store";
 import InlineLoader from "../../Components/InlineLoader";
 const RegisterForm = () => {
@@ -10,24 +11,45 @@ const RegisterForm = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
+
   const dispatch = useDispatch();
   let userRegister = store.getState().userRegister;
   let navigate = useNavigate();
 
+  const validateInput = (object) => {
+    for (const key of Object.keys(object)) {
+      if (!object[key].trim()) {
+        return `${key.toUpperCase()} is required`;
+      }
+    }
+    return true;
+  };
   const registerRequest = (e) => {
     e.preventDefault();
-    dispatch(register({ fullName, email, mobileNumber, password }));
+    const registrationDetails = { fullName, email, mobileNumber, password };
+    const validation = validateInput(registrationDetails);
+    if (validation === true) dispatch(register(registrationDetails));
+    else
+      toast.error(validation, {
+        toastId: "Registration-Validation",
+      });
   };
 
   store.subscribe(() => {
     userRegister = store.getState().userRegister;
+    if (userRegister.error) {
+      toast.error(userRegister.error, {
+        toastId: "Registration-Error",
+      });
+      dispatch(resetRegistrationError());
+    }
     if (userRegister.loading) {
       setLoading(true);
     } else {
       setLoading(false);
     }
     if (userRegister.token) {
-      navigate("/profile");
+      navigate("/");
     }
   });
   return (
@@ -51,7 +73,7 @@ const RegisterForm = () => {
                     type="text"
                     name="name"
                     placeholder="Full Name"
-                    required
+                    required={true}
                     onChange={(e) => {
                       setFullName(e.target.value);
                     }}
@@ -95,15 +117,6 @@ const RegisterForm = () => {
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
-                  />
-                </div>
-                <div className="ui left icon input w-100 field">
-                  <i className="fas fa-unlock-alt"></i>
-                  <input
-                    type="password"
-                    name="confirm-passowrd"
-                    placeholder="Confirm Password"
-                    required
                   />
                 </div>
               </div>

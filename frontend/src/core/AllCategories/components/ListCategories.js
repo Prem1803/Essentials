@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getAllCategories } from "../../../actions/CategoryActions";
+import { toast } from "react-toastify";
+import {
+  getAllCategories,
+  resetCategoryListError,
+} from "../../../actions/CategoryActions";
 import store from "../../../store";
 import SingleCategory from "./SingleCategory";
 
@@ -11,7 +15,12 @@ const ListCategories = () => {
   let category = store.getState().category;
   store.subscribe(() => {
     category = store.getState().category;
-
+    if (category.error) {
+      toast.error(category.error, {
+        toastId: "Category-List-Error",
+      });
+      dispatch(resetCategoryListError());
+    }
     if (category.categories) {
       setCategories(category.categories);
     }

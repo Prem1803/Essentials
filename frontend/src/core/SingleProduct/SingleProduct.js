@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { getSingleProduct } from "../../actions/ProductActions";
+import {
+  getSingleProduct,
+  resetSingleProductError,
+} from "../../actions/ProductActions";
 import store from "../../store";
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
 import ProductDetails from "./components/ProductDetails";
 import ProductReviews from "./components/ProductReviews";
 import CoverLoader from "../Components/CoverLoader";
+import { toast } from "react-toastify";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -18,6 +22,12 @@ const SingleProduct = () => {
   let product = store.getState().product;
   store.subscribe(() => {
     product = store.getState().product;
+    if (product.error) {
+      toast.error(product.error, {
+        toastId: "Product-Error",
+      });
+      dispatch(resetSingleProductError());
+    }
     if (product.product) {
       setProductDetails(product.product);
       if (product.product.reviews) {

@@ -69,7 +69,7 @@ CategoryRouter.post("/category/delete", async (req, res) => {
   }
 });
 
-CategoryRouter.get("/categories", async (req, res) => {
+CategoryRouter.get("/allcategories", async (req, res) => {
   try {
     let categories = await Category.find({});
 

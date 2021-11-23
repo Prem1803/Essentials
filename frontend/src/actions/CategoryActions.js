@@ -12,7 +12,7 @@ export const getAllCategories = () => async (dispatch) => {
       type: CATEGORY_REQUEST,
     });
 
-    const data = await APICore("/categories", "get", null);
+    const data = await APICore("/allcategories", "get", null);
 
     dispatch({
       type: CATEGORY_SUCCESS,
@@ -25,4 +25,10 @@ export const getAllCategories = () => async (dispatch) => {
         e.response && e.response.data.error ? e.response.data.error : e.error,
     });
   }
+};
+
+export const resetCategoryListError = () => async (dispatch) => {
+  dispatch({
+    type: CATEGORY_FAIL,
+  });
 };

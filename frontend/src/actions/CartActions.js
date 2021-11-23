@@ -180,3 +180,13 @@ export const removeFromCart = (requestBody) => async (dispatch, getState) => {
     });
   }
 };
+export const resetCartListError = () => async (dispatch) => {
+  dispatch({
+    type: CART_LIST_FAIL,
+  });
+};
+export const resetCartAddError = () => async (dispatch) => {
+  dispatch({
+    type: ADD_TO_CART_FAIL,
+  });
+};

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { getAllCategories } from "../../actions/CategoryActions";
-import { createProduct, updateProduct } from "../../actions/ProductActions";
+import {
+  createProduct,
+  resetCreateProductError,
+  resetUpdateProductError,
+  updateProduct,
+} from "../../actions/ProductActions";
 import { FetchImage } from "../../api/APICore";
 import store from "../../store";
 
@@ -10,11 +16,42 @@ const EditProduct = ({ setProduct, productDetails }) => {
   const [images, setImages] = useState([]);
   const [imagesForUpload, setImagesForUpload] = useState([]);
   const [product, setProductDetails] = useState({
+    name: "",
+    description: "",
+    amount: "",
+    quantity: "",
     onSale: false,
-    quantityType: "",
+    quantityType: "Items",
     categoryId: "",
     features: [],
+    tags: [],
   });
+  const validateInput = (object) => {
+    for (const key of Object.keys(object)) {
+      if (key === "features") {
+        if (object[key].length < 3) {
+          return `Add at least 3 ${key.toUpperCase()}.`;
+        }
+      } else {
+        if (key === "onSale" || key === "tags" || key === "images") {
+          continue;
+        }
+        if (key === "amount" || key === "quantity") {
+          if (!String(object[key]).trim()) {
+            return `${key.toUpperCase()} is required`;
+          }
+        } else {
+          if (!object[key].trim()) {
+            return `${key.toUpperCase()} is required`;
+          }
+        }
+      }
+    }
+    if (images.length + imagesForUpload.length < 3) {
+      return "Add at least 3 Images";
+    }
+    return true;
+  };
   useEffect(() => {
     console.log(productDetails);
     if (productDetails) {
@@ -59,8 +96,37 @@ const EditProduct = ({ setProduct, productDetails }) => {
   };
   let category = store.getState().category;
   const dispatch = useDispatch();
+  let updateProductState = store.getState().updateProduct;
+  let createProductState = store.getState().createProduct;
   store.subscribe(() => {
     category = store.getState().category;
+    updateProductState = store.getState().updateProduct;
+    createProductState = store.getState().createProduct;
+    if (createProductState.error) {
+      toast.error(createProductState.error, {
+        toastId: "Create-Product-Error",
+      });
+      dispatch(resetCreateProductError());
+    }
+    if (createProductState.product) {
+      toast.success("Product Created", {
+        toastId: "Create-Product-Success",
+      });
+      dispatch(resetCreateProductError());
+    }
+
+    if (updateProductState.error) {
+      toast.error(updateProductState.error, {
+        toastId: "Update-Product-Error",
+      });
+      dispatch(resetUpdateProductError());
+    }
+    if (updateProductState.product) {
+      toast.success("Product Updated", {
+        toastId: "Update-Product-Success",
+      });
+      dispatch(resetUpdateProductError());
+    }
     if (category.categories) {
       setCategories(category.categories);
     }
@@ -77,21 +143,28 @@ const EditProduct = ({ setProduct, productDetails }) => {
   };
   const saveProduct = (e) => {
     e.preventDefault();
-    let formData = new FormData();
-    console.log(product);
-    for (const key of Object.keys(product)) {
-      let value = product[key];
-      if (key === "tags") {
-        formData.append("productTags", JSON.stringify(value));
-      } else if (key === "features") {
-        formData.append("productFeatures", JSON.stringify(value));
-      } else formData.append(key, value);
-    }
-    for (const media of imagesForUpload) {
-      formData.append("media", media);
-    }
-    if (product.productId) dispatch(updateProduct(formData));
-    else dispatch(createProduct(formData));
+    const validation = validateInput(product);
+    console.log(validation);
+    if (validation === true) {
+      let formData = new FormData();
+      console.log(product);
+      for (const key of Object.keys(product)) {
+        let value = product[key];
+        if (key === "tags") {
+          formData.append("productTags", JSON.stringify(value));
+        } else if (key === "features") {
+          formData.append("productFeatures", JSON.stringify(value));
+        } else formData.append(key, value);
+      }
+      for (const media of imagesForUpload) {
+        formData.append("media", media);
+      }
+      if (product.productId) dispatch(updateProduct(formData));
+      else dispatch(createProduct(formData));
+    } else
+      toast.error(validation, {
+        toastId: "Product-Validation",
+      });
   };
   return (
     <div className="ui equal width form">

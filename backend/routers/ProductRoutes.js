@@ -52,10 +52,8 @@ ProductRouter.post(
       let product = await Product.findOne({ _id: productId, owner: userId });
       if (!product) throw new Error("No such Product Found.");
       if (req.files) {
-        let mediaFiles = [];
-
         for (const file of req.files) {
-          mediaFiles.push(file.filename);
+          product.images.push(file.filename);
         }
       }
       const updateObject = Object.keys(req.body);

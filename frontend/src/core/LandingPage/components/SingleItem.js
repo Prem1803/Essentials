@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addToCart } from "../../../actions/CartActions";
-import { addToWishlist } from "../../../actions/WishlistActions";
+import { toast } from "react-toastify";
+import { addToCart, resetCartAddError } from "../../../actions/CartActions";
+import {
+  addToWishlist,
+  resetWishlistAddError,
+} from "../../../actions/WishlistActions";
 import { FetchImage } from "../../../api/APICore";
 import store from "../../../store";
 import CoverLoader from "../../Components/CoverLoader";
@@ -53,8 +57,24 @@ const SingleItem = ({ product }) => {
   };
   let wishlist = store.getState().wishlist;
   const [inWishList, setInWishList] = useState(false);
+  let addToWishlistState = store.getState().addToWishlist;
+  let addToCartState = store.getState().addToCart;
   store.subscribe(() => {
     wishlist = store.getState().wishlist;
+    addToCartState = store.getState().addToCart;
+    addToWishlistState = store.getState().addToWishlist;
+    if (addToCartState.error) {
+      toast.error(addToCartState.error, {
+        toastId: "Cart-ADD-Error",
+      });
+      dispatch(resetCartAddError());
+    }
+    if (addToWishlistState.error) {
+      toast.error(addToWishlistState.error, {
+        toastId: "Wishlist-ADD-Error",
+      });
+      dispatch(resetWishlistAddError());
+    }
     if (wishlist.wishlistItems) {
       for (const item of wishlist.wishlistItems) {
         if (product._id === item._id) {

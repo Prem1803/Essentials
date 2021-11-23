@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getCartItems } from "../../actions/CartActions";
+import { toast } from "react-toastify";
+import { getCartItems, resetCartListError } from "../../actions/CartActions";
 import store from "../../store";
 import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
@@ -15,6 +16,12 @@ const Cart = () => {
   let cart = store.getState().cart;
   store.subscribe(() => {
     cart = store.getState().cart;
+    if (cart.error) {
+      toast.error(cart.error, {
+        toastId: "Cart-List-Error",
+      });
+      dispatch(resetCartListError());
+    }
     if (cart.cartItems) {
       setCartItems(cart.cartItems);
     }

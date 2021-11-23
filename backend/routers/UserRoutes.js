@@ -4,7 +4,11 @@ const Product = require("../models/Product");
 const UserRouter = new express.Router();
 const upload = require("../utils/upload");
 const { auth } = require("../middlewares/authMiddleware");
-const { getTrimmedMobileNumber } = require("../utils/helperFunction");
+const {
+  getTrimmedMobileNumber,
+  validateEmail,
+  validateMobileNumber,
+} = require("../utils/helperFunction");
 
 UserRouter.get("/user", auth, async (req, res) => {
   try {
@@ -35,6 +39,7 @@ UserRouter.post(
       for (const update of updateObject) {
         if (update === "email") {
           const { email } = req.body;
+          if (!validateEmail(email)) throw new Error("Invalid Email");
           const emailInDB = await User.findOne({ email });
           if (emailInDB && emailInDB._id.toString() !== userId.toString()) {
             throw new Error("Email is already registered.");
@@ -42,6 +47,8 @@ UserRouter.post(
           user.email = email;
         } else if (update === "mobileNumber") {
           let mobileNumber = getTrimmedMobileNumber(req.body[update]);
+          if (!validateMobileNumber(mobileNumber))
+            throw new Error("Invalid Mobile Number");
           const mobileNumberInDB = await User.findOne({ mobileNumber });
           if (
             mobileNumberInDB &&
@@ -52,6 +59,8 @@ UserRouter.post(
           user.mobileNumber = mobileNumber;
         } else if (update === "alternateMobileNumber") {
           user.alternateMobileNumber = getTrimmedMobileNumber(req.body[update]);
+          if (!validateMobileNumber(user.alternateMobileNumber))
+            throw new Error("Invalid Alternate Mobile Number");
         } else if (
           update === "houseNumber" ||
           update === "area" ||

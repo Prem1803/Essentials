@@ -103,3 +103,8 @@ export const removeFromWishlist =
       });
     }
   };
+export const resetWishlistAddError = () => async (dispatch) => {
+  dispatch({
+    type: ADD_TO_WISHLIST_FAIL,
+  });
+};

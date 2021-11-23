@@ -7,9 +7,13 @@ import Navbar from "../Components/Navbar";
 import CategoryHeader from "./components/CategoryHeader";
 import CategoryListSidebar from "./components/CategoryListSidebar";
 import SingleProduct from "./components/SingleProduct";
-import { getAllProducts } from "../../actions/ProductActions";
+import {
+  getAllProducts,
+  resetProductListError,
+} from "../../actions/ProductActions";
 import store from "../../store";
 import CoverLoader from "../Components/CoverLoader";
+import { toast } from "react-toastify";
 const CategoryWiseProducts = () => {
   const { category } = useParams();
   const dispatch = useDispatch();
@@ -25,6 +29,12 @@ const CategoryWiseProducts = () => {
   let products = store.getState().products;
   store.subscribe(() => {
     products = store.getState().products;
+    if (products.error) {
+      toast.error(products.error, {
+        toastId: "Product-List-Error",
+      });
+      dispatch(resetProductListError());
+    }
     if (products.products) {
       setCategoryProducts(products.products);
     }

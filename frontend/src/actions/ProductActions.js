@@ -208,3 +208,24 @@ export const updateProduct = (requestBody) => async (dispatch, getState) => {
     });
   }
 };
+
+export const resetProductListError = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_LIST_FAIL,
+  });
+};
+export const resetSingleProductError = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_FAIL,
+  });
+};
+export const resetCreateProductError = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_CREATE_FAIL,
+  });
+};
+export const resetUpdateProductError = () => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_UPDATE_FAIL,
+  });
+};

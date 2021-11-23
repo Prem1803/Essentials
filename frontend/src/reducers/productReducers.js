@@ -64,32 +64,32 @@ export const productListReducer = (state = { products: [] }, action) => {
       return state;
   }
 };
-export const createProductReducer = (state = { product: {} }, action) => {
+export const createProductReducer = (state = { product: null }, action) => {
   switch (action.type) {
     case PRODUCT_CREATE_REQUEST:
-      return { loading: true, product: {} };
+      return { loading: true, product: null };
     case PRODUCT_CREATE_SUCCESS:
       return {
         loading: false,
         product: action.payload,
       };
     case PRODUCT_CREATE_FAIL:
-      return { loading: false, product: {}, error: action.payload };
+      return { loading: false, product: null, error: action.payload };
     default:
       return state;
   }
 };
-export const updateProductReducer = (state = { product: {} }, action) => {
+export const updateProductReducer = (state = { product: null }, action) => {
   switch (action.type) {
     case PRODUCT_UPDATE_REQUEST:
-      return { loading: true, product: {} };
+      return { loading: true, product: null };
     case PRODUCT_UPDATE_SUCCESS:
       return {
         loading: false,
         product: action.payload,
       };
     case PRODUCT_UPDATE_FAIL:
-      return { loading: false, product: {}, error: action.payload };
+      return { loading: false, product: null, error: action.payload };
     default:
       return state;
   }

@@ -26,6 +26,10 @@ OrderRouter.post("/order/create", auth, async (req, res) => {
         note: note,
         user: userId,
       });
+      if (product.quantitiesLeft - value.quantity >= 0) {
+        product.quantitiesLeft = product.quantitiesLeft - value.quantity;
+        await product.save();
+      }
       await order.save();
     }
     user.cart = [];

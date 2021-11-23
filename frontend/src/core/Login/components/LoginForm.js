@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { login } from "../../../actions/UserActions";
+import { toast } from "react-toastify";
+import { login, resetLoginError } from "../../../actions/UserActions";
 import store from "../../../store";
 import InlineLoader from "../../Components/InlineLoader";
 
@@ -12,21 +13,40 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   let userLogin = store.getState().userLogin;
   let navigate = useNavigate();
-
+  const validateInput = (object) => {
+    for (const key of Object.keys(object)) {
+      if (!object[key].trim()) {
+        return `${key.toUpperCase()} is required`;
+      }
+    }
+    return true;
+  };
   const loginRequest = (e) => {
     e.preventDefault();
-    dispatch(login({ username, password }));
+    const loginDetails = { username, password };
+    const validation = validateInput(loginDetails);
+    if (validation === true) dispatch(login(loginDetails));
+    else
+      toast.error(validation, {
+        toastId: "Login-Validation",
+      });
   };
 
   store.subscribe(() => {
     userLogin = store.getState().userLogin;
+    if (userLogin.error) {
+      toast.error(userLogin.error, {
+        toastId: "Login-Error",
+      });
+      dispatch(resetLoginError());
+    }
     if (userLogin.loading) {
       setLoading(true);
     } else {
       setLoading(false);
     }
     if (userLogin.token) {
-      navigate("/profile");
+      navigate("/");
     }
   });
   return (

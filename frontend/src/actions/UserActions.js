@@ -167,3 +167,19 @@ export const updateUserImage = (imageUrl) => async (dispatch) => {
     });
   } catch (e) {}
 };
+
+export const resetLoginError = () => async (dispatch) => {
+  dispatch({
+    type: USER_LOGIN_FAIL,
+  });
+};
+export const resetRegistrationError = () => async (dispatch) => {
+  dispatch({
+    type: USER_REGISTER_FAIL,
+  });
+};
+export const resetUpdateUserError = () => async (dispatch) => {
+  dispatch({
+    type: USER_UPDATE_FAIL,
+  });
+};

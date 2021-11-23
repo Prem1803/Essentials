@@ -1,6 +1,10 @@
 const express = require("express");
 const User = require("../models/User");
-const { getTrimmedMobileNumber } = require("../utils/helperFunction");
+const {
+  getTrimmedMobileNumber,
+  validateMobileNumber,
+  validateEmail,
+} = require("../utils/helperFunction");
 const AuthRouter = new express.Router();
 AuthRouter.post("/user/signup", async (req, res) => {
   try {
@@ -12,9 +16,12 @@ AuthRouter.post("/user/signup", async (req, res) => {
     let firstName = fullName.split(" ")[0];
     let lastName = fullName.replace(firstName, "");
     lastName = lastName.trim();
+    if (!validateEmail(email)) throw new Error("Invalid Email");
     let userWithEmail = await User.findOne({ email });
     if (userWithEmail) throw new Error("This email is already registered.");
     mobileNumber = getTrimmedMobileNumber(mobileNumber);
+    if (!validateMobileNumber(mobileNumber))
+      throw new Error("Invalid Mobile Number");
     let userWithMobileNumber = await User.findOne({ mobileNumber });
     if (userWithMobileNumber)
       throw new Error("This mobile number is already registered.");

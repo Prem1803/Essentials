@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   getUserDetails,
   updateUserDetails,
   updateUserImage,
+  resetUpdateUserError,
 } from "../../../actions/UserActions";
 import { FetchImage } from "../../../api/APICore";
 import store from "../../../store";
@@ -12,18 +14,15 @@ import CoverLoader from "../../Components/CoverLoader";
 
 const ProfileDetails = () => {
   const [userDetails, setUserDetails] = useState({});
-  const [ImageUpdated, setImageUpdated] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [ImageData, setImageData] = useState("");
+  const [ImageName, setImageName] = useState("");
   const [ImageURL, setImageURL] = useState("");
   const [fetchingImage, setFetchingImage] = useState(false);
 
   let user = store.getState().user;
-  let userImage = store.getState().userImage;
   let updateUser = store.getState().updateUser;
   const dispatch = useDispatch();
   useEffect(() => {
-    getImage();
     if (user.loading) setLoading(true);
     else setLoading(false);
     if (user.userDetails) {
@@ -40,6 +39,10 @@ const ProfileDetails = () => {
         city: user.userDetails.address.city,
         state: user.userDetails.address.state,
       });
+      const profile = user.userDetails.profile;
+      if (ImageName !== profile) {
+        setImageName(profile);
+      }
     } else {
       dispatch(getUserDetails());
     }
@@ -56,9 +59,15 @@ const ProfileDetails = () => {
   store.subscribe(() => {
     user = store.getState().user;
     updateUser = store.getState().updateUser;
-    userImage = store.getState().userImage;
     if (updateUser.loading) setLoading(true);
     else setLoading(false);
+    if (updateUser.error) {
+      toast.error(updateUser.error, {
+        toastId: "Update-User-Error",
+      });
+      dispatch(resetUpdateUserError());
+    }
+
     if (user.userDetails) {
       setUserDetails({
         firstName: user.userDetails.firstName,
@@ -73,26 +82,22 @@ const ProfileDetails = () => {
         city: user.userDetails.address.city,
         state: user.userDetails.address.state,
       });
-    }
-    if (userImage === "") {
-      getImage();
-    } else {
-      setImageURL(userImage);
+      const profile = user.userDetails.profile;
+      if (ImageName !== profile) {
+        setImageName(profile);
+      }
     }
   }, []);
+  useEffect(() => {
+    getImage(ImageName);
+  }, [ImageName]);
 
-  const getImage = () => {
-    if (user.userDetails && user.userDetails.profile) {
-      const SetTheFetchedImage = async () => {
-        setFetchingImage(true);
-        var data = await FetchImage(user.userDetails.profile);
-        setImageData(data);
-        const url = URL.createObjectURL(data);
-        dispatch(updateUserImage(url));
-        setFetchingImage(false);
-      };
-      SetTheFetchedImage();
-    }
+  const getImage = async (profile) => {
+    setFetchingImage(true);
+    var data = await FetchImage(profile);
+    const url = URL.createObjectURL(data);
+    setImageURL(url);
+    setFetchingImage(false);
   };
   const UpdateUser = (e) => {
     e.preventDefault();
@@ -170,11 +175,11 @@ const ProfileDetails = () => {
                         ) : (
                           <img
                             src={
-                              ImageData !== ""
+                              ImageName !== ""
                                 ? ImageURL
                                 : "img/logos/profile-img.png"
                             }
-                            alt="Product"
+                            alt="Profile"
                           />
                         )}
                       </div>
