@@ -22,8 +22,10 @@ const SingleReview = ({ review }) => {
   useEffect(() => {
     const SetTheFetchedImage = async () => {
       setFetchingImage(true);
-      if (review.user.profile) var data = await FetchImage(review.user.profile);
-      setImageData(data);
+      if (review.user.profile) {
+        var data = await FetchImage(review.user.profile);
+        setImageData(data);
+      }
 
       setFetchingImage(false);
     };
@@ -36,7 +38,11 @@ const SingleReview = ({ review }) => {
           <CoverLoader image={true} />
         ) : (
           <img
-            src={ImageData !== "" ? URL.createObjectURL(ImageData) : ""}
+            src={
+              ImageData !== ""
+                ? URL.createObjectURL(ImageData)
+                : "img/logos/profile-img.png"
+            }
             alt={review.user.firstName}
           />
         )}
