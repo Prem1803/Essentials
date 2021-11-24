@@ -49,6 +49,7 @@ const RegisterForm = () => {
       setLoading(false);
     }
     if (userRegister.token) {
+      window.location.reload();
       navigate("/");
     }
   });

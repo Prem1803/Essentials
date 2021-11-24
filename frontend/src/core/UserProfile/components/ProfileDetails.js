@@ -40,7 +40,7 @@ const ProfileDetails = () => {
         state: user.userDetails.address.state,
       });
       const profile = user.userDetails.profile;
-      if (ImageName !== profile) {
+      if (profile && ImageName !== profile) {
         setImageName(profile);
       }
     } else {
@@ -83,13 +83,13 @@ const ProfileDetails = () => {
         state: user.userDetails.address.state,
       });
       const profile = user.userDetails.profile;
-      if (ImageName !== profile) {
+      if (profile && ImageName !== profile) {
         setImageName(profile);
       }
     }
   }, []);
   useEffect(() => {
-    getImage(ImageName);
+    if (ImageName !== "") getImage(ImageName);
   }, [ImageName]);
 
   const getImage = async (profile) => {

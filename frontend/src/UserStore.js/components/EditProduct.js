@@ -9,12 +9,14 @@ import {
   updateProduct,
 } from "../../actions/ProductActions";
 import { FetchImage } from "../../api/APICore";
+import InlineLoader from "../../core/Components/InlineLoader";
 import store from "../../store";
 
 const EditProduct = ({ setProduct, productDetails }) => {
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
   const [imagesForUpload, setImagesForUpload] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [product, setProductDetails] = useState({
     name: "",
     description: "",
@@ -53,7 +55,6 @@ const EditProduct = ({ setProduct, productDetails }) => {
     return true;
   };
   useEffect(() => {
-    console.log(productDetails);
     if (productDetails) {
       if (Object.keys(productDetails).length !== 0)
         setProductDetails({
@@ -106,6 +107,7 @@ const EditProduct = ({ setProduct, productDetails }) => {
       toast.error(createProductState.error, {
         toastId: "Create-Product-Error",
       });
+      setLoading(false);
       dispatch(resetCreateProductError());
     }
     if (createProductState.product) {
@@ -113,12 +115,14 @@ const EditProduct = ({ setProduct, productDetails }) => {
         toastId: "Create-Product-Success",
       });
       dispatch(resetCreateProductError());
+      setProduct(null);
     }
 
     if (updateProductState.error) {
       toast.error(updateProductState.error, {
         toastId: "Update-Product-Error",
       });
+      setLoading(false);
       dispatch(resetUpdateProductError());
     }
     if (updateProductState.product) {
@@ -126,6 +130,7 @@ const EditProduct = ({ setProduct, productDetails }) => {
         toastId: "Update-Product-Success",
       });
       dispatch(resetUpdateProductError());
+      setProduct(null);
     }
     if (category.categories) {
       setCategories(category.categories);
@@ -144,10 +149,9 @@ const EditProduct = ({ setProduct, productDetails }) => {
   const saveProduct = (e) => {
     e.preventDefault();
     const validation = validateInput(product);
-    console.log(validation);
     if (validation === true) {
+      setLoading(true);
       let formData = new FormData();
-      console.log(product);
       for (const key of Object.keys(product)) {
         let value = product[key];
         if (key === "tags") {
@@ -364,8 +368,12 @@ const EditProduct = ({ setProduct, productDetails }) => {
           </div>
         </div>
       </div>
-      <button className="btn btn-orange btn-block" onClick={saveProduct}>
-        Save
+      <button
+        className="btn btn-orange btn-block"
+        onClick={saveProduct}
+        disabled={loading}
+      >
+        Save {loading && <InlineLoader />}
       </button>
     </div>
   );

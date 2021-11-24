@@ -46,6 +46,7 @@ const LoginForm = () => {
       setLoading(false);
     }
     if (userLogin.token) {
+      window.location.reload();
       navigate("/");
     }
   });

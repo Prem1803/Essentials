@@ -17,7 +17,6 @@ const UserStore = () => {
     if (user.token) {
       setIsLoggedIn(true);
     } else {
-      console.log(user.token);
       setIsLoggedIn(false);
     }
   }, []);
