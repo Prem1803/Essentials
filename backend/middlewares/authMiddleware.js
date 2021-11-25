@@ -35,12 +35,12 @@ const verify = async function (token) {
 const getAuthorizedUser = async (token) => {
   const decoded = await verify(token);
   if (!decoded) {
-    throw new Error("Invalid Token. Login Again");
+    throw new Error("Try to Login Again");
   }
   const userObject = await User.findOne({ _id: decoded._id });
 
   if (!userObject) {
-    throw new Error("User not found.");
+    throw new Error("Try to Login Again");
   }
   return userObject;
 };

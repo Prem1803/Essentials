@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { getStoreOrderSummary } from "../../actions/OrderActions";
 import { getUserDetails, updateUserDetails } from "../../actions/UserActions";
 import CoverLoader from "../../core/Components/CoverLoader";
@@ -21,8 +22,10 @@ const StoreHeader = ({ currentTab, setCurrentTab, setOrderStatus }) => {
   };
   let user = store.getState().user;
   let storeOrderSummary = store.getState().storeOrderSummary;
+  let navigate = useNavigate();
   useEffect(() => {
     if (user.userDetails) {
+      if (!user.userDetails.store) navigate("/profile");
       setStore(user.userDetails.store);
     } else {
       dispatch(getUserDetails());
@@ -47,6 +50,7 @@ const StoreHeader = ({ currentTab, setCurrentTab, setOrderStatus }) => {
       setLoading(false);
     }
     if (user.userDetails) {
+      if (!user.userDetails.store) navigate("/profile");
       setStore(user.userDetails.store);
     }
   });

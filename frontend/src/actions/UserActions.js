@@ -121,6 +121,10 @@ export const getUserDetails = () => async (dispatch, getState) => {
       payload:
         e.response && e.response.data.error ? e.response.data.error : e.error,
     });
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload: null,
+    });
   }
 };
 
