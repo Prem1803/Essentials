@@ -11,11 +11,18 @@ Features
 5. Use search filters to search for related items.
 6. Rate and review the ordered product.
 7. Repeat your order.
+
 and many more ....
+
+Login Details
+
+Email - prem@gmail.com
+
+Password - 12345678
 
 - User Dashboard
 
-![image](https://user-images.githubusercontent.com/56423583/178974935-583973b6-a827-4406-8cc9-83711549814c.png)
+![image](https://user-images.githubusercontent.com/56423583/178976758-2eac545f-813a-474c-9df4-d6c386e813b3.png)
 
 - View your previous orders
 
