@@ -15,7 +15,7 @@ and many more ....
 
 - User Dashboard
 
-![image](https://user-images.githubusercontent.com/56423583/178972236-61f947e7-8104-407c-bd7b-e713f3e1e1c0.png)
+![image](https://user-images.githubusercontent.com/56423583/178974935-583973b6-a827-4406-8cc9-83711549814c.png)
 
 - View your previous orders
 
@@ -48,7 +48,7 @@ and many more ....
 
 - Manage Orders
 
-![image](https://user-images.githubusercontent.com/56423583/178974048-dcc8b35a-7cd6-4df7-9b41-0fbcc83f5569.png)
+![image](https://user-images.githubusercontent.com/56423583/178975202-44ce500d-5eca-4f41-a63c-0e1f8e941945.png)
 
 - Add Products to your store
 
