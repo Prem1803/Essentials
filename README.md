@@ -58,3 +58,4 @@ and many more ....
 
 ![image](https://user-images.githubusercontent.com/56423583/178974333-111acc9e-05b5-4c60-9104-f9051d9ac73f.png)
 
+Tech Stack: ReactJS, NodeJS, ExpressJS, MongoDB, Javascript, Redux.
